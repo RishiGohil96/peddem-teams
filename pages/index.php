@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +14,7 @@
 
     <title>Cravings | Admin</title>
     <!-- Bootstrap Core CSS -->
-    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
@@ -104,26 +103,26 @@
                         <li>
                             <a href="#collapse_list" class="collapse-toggle" data-toggle="collapse">
                                    <i class="mdi mdi-file-document"></i>
-                                    <span class="hide-menu"> items </span>
+                                    <span class="hide-menu"> Orders </span>
                                 </a>
                             <div id="collapse_list" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="orders_pending.php" aria-expanded="false">
                                             <i class="fa fa-exclamation"></i>
-                                            <span class="hide-menu"> sub item</span>
+                                            <span class="hide-menu"> Pending Orders</span>
                                             </a>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="orders_confirmed.php" aria-expanded="true">
                                             <i class="fa fa-check"></i>
-                                            <span class="hide-menu"> sub item</span>
+                                            <span class="hide-menu"> Confirmed Orders</span>
                                             </a>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="orders_cancelled.php" aria-expanded="true">
                                             <i class="fa fa-times"></i>
-                                            <span class="hide-menu"> sub item</span>
+                                            <span class="hide-menu"> Cancelled Orders</span>
                                             </a>
                                     </li>
 
@@ -133,20 +132,20 @@
                         <li>
                             <a href="#collapse_list_cakes" class="collapse-toggle" data-toggle="collapse">
                                    <i class="mdi mdi-cake"></i>
-                                    <span class="hide-menu"> items </span>
+                                    <span class="hide-menu"> Cakes </span>
                                 </a>
                             <div id="collapse_list_cakes" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="cakes_add.php" aria-expanded="false">
                                             <i class="fa fa-plus"></i>
-                                            <span class="hide-menu"> sub item</span>
+                                            <span class="hide-menu"> Add Cake</span>
                                             </a>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="cakes_update.php" aria-expanded="true">
                                             <i class="fa fa-check"></i>
-                                            <span class="hide-menu"> sub item</span>
+                                            <span class="hide-menu"> Update Cake</span>
                                             </a>
                                     </li>
 
@@ -156,20 +155,20 @@
                         <li>
                             <a href="#collapse_list_customers" class="collapse-toggle" data-toggle="collapse">
                                    <i class="fa fa-address-book-o"></i>
-                                    <span class="hide-menu"> items </span>
+                                    <span class="hide-menu"> Customers </span>
                                 </a>
                             <div id="collapse_list_customers" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="customers_add.php" aria-expanded="false">
                                             <i class="fa fa-user-plus"></i>
-                                            <span class="hide-menu"> sub item</span>
+                                            <span class="hide-menu"> Add Customers</span>
                                             </a>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="customers_view.php" aria-expanded="true">
                                             <i class="fa fa-users"></i>
-                                            <span class="hide-menu"> sub item</span>
+                                            <span class="hide-menu"> View Customers</span>
                                             </a>
                                     </li>
                                 </ul>
@@ -178,7 +177,7 @@
                         <li>
                             <a class="waves-effect waves-dark" href="stats.php" aria-expanded="true">
                                     <i class="fa fa-line-chart"></i>
-                                    <span class="hide-menu"> items</span>
+                                    <span class="hide-menu"> Stats</span>
                                 </a>
                         </li>
                         <li>
@@ -218,16 +217,150 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-
+                <!-- Pending Orders -->
+                <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                here
+                                <?php
+                                    $query = "SELECT count('order_status') as count from cravings_test_orders_details where order_status='placed' ";
+
+                                    if($result = $conn->query($query))
+                                    {
+                                        while($row = mysqli_fetch_array($result))
+                                        {
+                                            echo "<a href='orders_pending.php'><h2>".$row['count']." pending orders!</a></h2>";
+                                        }
+                                    }
+                                    ?>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- End Pending Orders -->
+                <!-- ============================================================== -->
+
+                <!-- Upcoming Birthdays -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body upcoming_birthdays">
+                                <h3 class="text-themecolor">Upcoming Birthdays</h3>
+                                <?php
+                                    $today = date('2000-m-d');
+                                    $next_week = date('2000-m-d', strtotime('+1 week'));
+                                    $query = "SELECT * FROM `cravings_test_customers` WHERE birthday BETWEEN '$today' AND '$next_week'  ORDER BY birthday";
+                                    if($result = $conn->query($query))
+                                    {
+                                        if(mysqli_num_rows($result) == 0)
+                                        {
+                                            ?>
+                                    <h4>No Birthdays this week!</h4>
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                            ?>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Phone</th>
+                                                        <th>e-mail</th>
+                                                        <th>Birthday</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                            while($row = mysqli_fetch_array($result))
+                                            {
+                                                $birthday = explode('-',$row['birthday']);
+                                                $birthday = $birthday[2].'/'.$birthday[1];
+                                                echo "<tr>";
+                                                echo "<td>".$row['name']."</td>";
+                                                echo "<td>".$row['phone']."</td>";
+                                                echo "<td>".$row['email']."</td>";
+                                                echo "<td>".$birthday."</td>";
+                                                echo "</tr>";
+                                            }
+                                            ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <?php
+                                        }
+
+                                    }
+                                    ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Upcoming Birthdays -->
+                <!-- ============================================================== -->
+
+
+                <!-- Orders Summary -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-themecolor">Orders Summary</h3>
+                                <?php
+
+                                    $query = "SELECT
+                                                SUM(IF(order_status = 'placed', 1,0)) AS `pending_orders`,
+                                                SUM(IF(order_status = 'confirmed', 1,0)) AS `confirmed_orders`,
+                                                SUM(IF(order_status = 'cancelled', 1,0)) AS `cancelled_orders`,
+                                                COUNT(order_status) AS `total`
+                                                FROM cravings_test_orders_details";
+                                    if($result = $conn->query($query))
+                                    {
+
+                                            ?>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Pending Orders</th>
+                                                    <th>Confirmed Orders</th>
+                                                    <th>Cancelled Orders</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                            while($row = mysqli_fetch_array($result))
+                                            {
+                                                echo "<tr>";
+                                                echo "<td>".$row['pending_orders']."</td>";
+                                                echo "<td>".$row['confirmed_orders']."</td>";
+                                                echo "<td>".$row['cancelled_orders']."</td>";
+                                                echo "<td>".$row['total']."</td>";
+                                                echo "</tr>";
+                                            }
+                                            ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <?php
+
+
+                                    }
+                                    else echo $conn->error;
+                                    ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Orders Summary -->
+                <!-- ============================================================== -->
+
+
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -239,7 +372,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2018 Peddem Sports Complex
+                © 2018 Cravings - Admin Dashboard
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -255,10 +388,12 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="assets/plugins/jquery/jquery.min.js"></script>
+    <script src="../assets/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="assets/plugins/bootstrap/js/popper.min.js"></script>
-    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="js/perfect-scrollbar.jquery.min.js"></script>
     <!--Wave Effects -->
     <script src="js/waves.js"></script>
     <!--Menu sidebar -->
@@ -266,7 +401,7 @@
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
     <!-- Redirect JS -->
-    <script src="js/jquery.redirect.js"></script>
+    <script src="../../../js/jquery.redirect.js"></script>
 
     <script type="text/javascript">
         function logout() {
