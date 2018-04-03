@@ -207,8 +207,8 @@
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">School Register / Add School / Events</h3>
+                    <div class="col-md-12 align-self-center">
+                        <h3 class="text-themecolor">School Register / Add School Participated</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -217,133 +217,109 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Select Events -->
+                <!-- School participated -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <?php
-                                include('config/db_config.php');
-                                $s_id = $_POST['s_id'];
-                                if(isset($_POST['age']))
-                                {
-                                    $age = $_POST['age'];
-                                    $category = $_POST['category'];
-                                    $school = $_POST['school'];
-                                }
-                                else
-                                {
-                                    $query = "select s_name, age, category from school_registered where s_id = ?";
-                                    if($stmt = $conn->prepare($query))
+                               <form class="form-material" id="add_school_participated">
+                                   <div class="col-md-12 col-lg-12 col-sm-12">
+                                   <div class="row">
+                                   <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <?php
+                                    include('config/db_config.php');
+                                    $query = "select * from school_participated";
+                                    $result = $conn->query($query);
+                                    if(mysqli_num_rows($result))
                                     {
-                                        $stmt->bind_param("i", $s_id);
-                                        $stmt->execute();
-                                        $stmt->bind_result($school, $age, $category);
-                                        $stmt->fetch();
-                                        $stmt->close();
-                                    }
-                                    else
-                                    {
-                                        echo $conn->error;
-                                    }
-                                }
-                                if(isset($_POST['edit']))
-                                {
-                                    $query = "select event_id from school_events where s_id = $s_id";
-                                    if($result = $conn->query($query))
-                                    {
-                                        $registered_events = array();
+                                        $participated = array();
                                         while($row = mysqli_fetch_assoc($result))
                                         {
-                                            array_push($registered_events, $row['event_id']);
+                                            array_push($participated,$row['s_id']);
                                         }
                                     }
 
-                                }
-                                ?>
-                                    <div class="center-text">
-                                        <h2>
-                                            <?php echo $school ?>
-                                        </h2>
-                                        <h4>
-                                            <?php echo $category." - ".$age ?>
-                                        </h4>
-                                    </div>
-                                    <form id=add_school_events class="form-material">
-
-                                        <div class="col-lg-12 col-md-12 col-sm-12  pad-top">
-                                            <div class="row">
-                                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                                    <?php
-                                                        $query = "select id, events, participants from event_list where category LIKE (?) AND age LIKE (?)";
-                                                        if($stmt = $conn->prepare($query))
+                                    $query="select * from school_registered";
+                                    if($result = $conn->query($query))
+                                    {
+                                        if(mysqli_num_rows($result) == 0)
+                                        {
+                                            ?>
+                                            <h2>No schools registered!</h2>
+                                            <?php
+                                        }
+                                        else
+                                        {
+                                            $total = mysqli_num_rows($result);
+                                            $half = ceil($total/2);
+                                            $school_count = 0;
+                                            while($row = mysqli_fetch_assoc($result))
+                                            {
+                                                $count = 0;
+                                                if(isset($participated))
+                                                {
+                                                    foreach($participated as $part)
+                                                    {
+                                                        if($part == $row['s_id'])
                                                         {
-                                                            $param_category = "%".$category."%";
-                                                            $param_age = "%".$age."%";
-                                                            $stmt->bind_param("ss",$param_category,$param_age);
-                                                            $stmt->execute();
-                                                            $stmt->store_result();
-                                                            $total_events = $stmt->num_rows();
-                                                            $stmt->bind_result($event_id, $event_name, $event_participants);
-                                                            $next_div = ceil($total_events/3);
-                                                            $count = 0;
-                                                            while($stmt->fetch())
-                                                            {
-                                                                $checked = 0;
-                                                                $count++;
-                                                                if(isset($registered_events))
-                                                                {
-                                                                    foreach($registered_events as $event)
-                                                                    {
-                                                                        if($event == $event_id)
-                                                                        {
-                                                                            $checked = 1;
-                                                                            break;
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            $checked = 0;
-                                                                        }
-                                                                    }
-                                                                }
-                                                                if(!$checked)
-                                                                {
-                                                                    echo "<input type='checkbox' name='events' value='$event_id, $event_participants'> $event_name<br>";
-                                                                }
-                                                                else
-                                                                {
-                                                                    echo "<input type='checkbox' name='events' value='$event_id, $event_participants' checked> $event_name<br>";
-                                                                }
-
-                                                                if($count % $next_div == 0)
-                                                                {
-                                                                    ?>
-                                                                        </div>
-                                                                        <div class="col-lg-4 col-md-4 col-sm-4">
-                                                                    <?php
-                                                                }
-                                                            }
+                                                            $count = 1;
+                                                            break;
                                                         }
-                                                        else
-                                                        {
-                                                            echo $conn->error;
-                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                                <div class="formgroup">
+                                                <?php
+                                                if($count)
+                                                {
                                                     ?>
+                                                        <input type="checkbox" value="<?php echo $row['s_id']?>" name="participated" checked>
+
+                                                    <?php
+                                                }
+                                                else
+                                                {
+                                                    ?>
+                                                        <input type="checkbox" value="<?php echo $row['s_id']?>" name="participated">
+                                                    <?php
+                                                }
+                                                echo $row['s_name'].", ".$row['category']." - ".$row['age']; ?>
                                                 </div>
-                                            </div>
-                                            <div class="row  pad-top">
-                                                <div class="col-md-12 center-text">
-                                                    <button class="btn btn-success">Register</button>
-                                                </div>
-                                            </div>
+                                                <?php
+                                                $school_count++;
+                                                if($school_count == $half)
+                                                {
+                                                    ?>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <?php
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-md-12 col-lg-12 col-sm-12 center-text pad-top">
+                                        <?php
+                                        if (isset($total))
+                                        {
+                                            ?>
+                                            <button class="btn btn-success">Submit</button>
+                                            <?php
+                                        }
+                                        ?>
                                         </div>
-                                    </form>
+                                    </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Select Events -->
+                <!-- End school participated -->
                 <!-- ============================================================== -->
 
 
@@ -388,11 +364,10 @@
     <script src="js/custom.min.js"></script>
     <!-- Redirect JS -->
     <script src="js/jquery.redirect.js"></script>
-    <!-- Sweet Alert -->
+    <!-- Sweet alert -->
     <script src="js/sweetalert.min.js"></script>
 
     <script type="text/javascript">
-        // ---------------- logout function ------------//
         function logout() {
             $.ajax({
                     method: "POST",
@@ -403,41 +378,44 @@
                     window.location = 'login/';
                 });
         }
-        // -------------- logout function end ----------//
-
         // ------------- form submit function ---------//
-            $("#add_school_events").submit(function(e) {
+            $("#add_school_participated").submit(function(e) {
                 e.preventDefault();
-                var school_events = new Array();
+                var school_participated = new Array();
 
-                $("input:checkbox[name=events]:checked").each(function(){
-                    school_events.push($(this).val());
+                $("input:checkbox[name=participated]:checked").each(function(){
+                    school_participated.push($(this).val());
                 });
-                console.log(school_events);
-                var url = "submit/submit_add_school_events.php";
+                console.log(school_participated);
+                if(! school_participated.length)
+                {
+                    swal("No School Selected","Please select a school","info");
+                    return;
+                }
+                var url = "submit/submit_add_school_participated.php";
                 $.ajax({
                     type: "POST",
                     url: url,
                     data: {
-                        s_id : <?php echo $s_id ?>,
-                        events : school_events
+                        schools : school_participated
                     },
                     success: function(data) {
                         console.log(data);
                         data = JSON.parse(data);
                         swal({
-                            title: data.response.message,
-                            text: '',
-                            type: data.response.status
+                            title: data.title,
+                            text: data.message,
+                            type: data.status
                         }, function(){
-                            if(data.response.status == 'success')
-                                $.redirect('view_registered_school.php');
+                            if(data.status == 'success')
+                                $.redirect('view_participated_school.php');
                         });
 
                     }
                 });
             });
             // ----------- form submit function end --------//
+
     </script>
 </body>
 

@@ -123,6 +123,12 @@
                                             <span class="hide-menu">View Registered</span>
                                         </a>
                                         </li>
+                                        <li>
+                                        <a class="waves-effect waves-dark" href="add_school_participated.php" aria-expanded="false">
+                                            <i class="fa fa-check-circle"></i>
+                                            <span class="hide-menu">School Participated</span>
+                                        </a>
+                                    </li>
                                     </ul>
                                 </div>
                             </li>

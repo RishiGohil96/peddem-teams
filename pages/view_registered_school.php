@@ -115,11 +115,11 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="waves-effect waves-dark" href="view_registered_school.php" aria-expanded="true">
+                                        <a class="collapse-toggle" href="#school_registered_category" data-toggle="collapse">
                                             <i class="fa fa-eye"></i>
                                             <span class="hide-menu">View Registered</span>
                                         </a>
-                                        <div class="collapse show">
+                                        <div id="school_registered_category" class="collapse show">
                                             <ul class="list-group">
                                                 <li>
                                                     <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = '' " aria-expanded="false">
@@ -178,6 +178,12 @@
 
                                             </ul>
                                         </div>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" href="add_school_participated.php" aria-expanded="false">
+                                            <i class="fa fa-check-circle"></i>
+                                            <span class="hide-menu">School Participated</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
