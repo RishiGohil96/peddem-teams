@@ -759,7 +759,8 @@ Main sidebar
   padding-top: 70px;
   background: #fff;
   -webkit-box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
-  box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08); }
+  box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+}
 
 .fix-sidebar .left-sidebar {
   position: fixed; }
@@ -2898,9 +2899,9 @@ form p:last-child {
 /* Remove default checkbox */
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
-  position: absolute;
+
   left: -9999px;
-  opacity: 0; }
+  }
 
 [type="checkbox"] {
   /* checkbox aspect */ }

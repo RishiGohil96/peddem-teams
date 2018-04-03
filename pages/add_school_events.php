@@ -18,6 +18,7 @@
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/sweetalert.css">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -105,7 +106,7 @@
                                    <i class="fa fa-address-book-o"></i>
                                     <span class="hide-menu">School Register</span>
                                 </a>
-                            <div id="collapse_list" class="collapse">
+                            <div id="collapse_list" class="collapse show">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="add_school.php" aria-expanded="false">
@@ -201,7 +202,7 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">Home</h3>
+                        <h3 class="text-themecolor">School Register / Add School / Events</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -210,18 +211,133 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Pending Orders -->
+                <!-- Select Events -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                here
+                                <?php
+                                include('config/db_config.php');
+                                $s_id = $_POST['s_id'];
+                                if(isset($_POST['age']))
+                                {
+                                    $age = $_POST['age'];
+                                    $category = $_POST['category'];
+                                    $school = $_POST['school'];
+                                }
+                                else
+                                {
+                                    $query = "select s_name, age, category from school_registered where s_id = ?";
+                                    if($stmt = $conn->prepare($query))
+                                    {
+                                        $stmt->bind_param("i", $s_id);
+                                        $stmt->execute();
+                                        $stmt->bind_result($school, $age, $category);
+                                        $stmt->fetch();
+                                        $stmt->close();
+                                    }
+                                    else
+                                    {
+                                        echo $conn->error;
+                                    }
+                                }
+                                if(isset($_POST['edit']))
+                                {
+                                    $query = "select event_id from school_events where s_id = $s_id";
+                                    if($result = $conn->query($query))
+                                    {
+                                        $registered_events = array();
+                                        while($row = mysqli_fetch_assoc($result))
+                                        {
+                                            array_push($registered_events, $row['event_id']);
+                                        }
+                                    }
+
+                                }
+                                ?>
+                                    <div class="center-text">
+                                        <h2>
+                                            <?php echo $school ?>
+                                        </h2>
+                                        <h4>
+                                            <?php echo $category." - ".$age ?>
+                                        </h4>
+                                    </div>
+                                    <form id=add_school_events class="form-material">
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12  pad-top">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <?php
+                                                        $query = "select id, events, participants from event_list where category LIKE (?) AND age LIKE (?)";
+                                                        if($stmt = $conn->prepare($query))
+                                                        {
+                                                            $param_category = "%".$category."%";
+                                                            $param_age = "%".$age."%";
+                                                            $stmt->bind_param("ss",$param_category,$param_age);
+                                                            $stmt->execute();
+                                                            $stmt->store_result();
+                                                            $total_events = $stmt->num_rows();
+                                                            $stmt->bind_result($event_id, $event_name, $event_participants);
+                                                            $next_div = ceil($total_events/3);
+                                                            $count = 0;
+                                                            while($stmt->fetch())
+                                                            {
+                                                                $checked = 0;
+                                                                $count++;
+                                                                if(isset($registered_events))
+                                                                {
+                                                                    foreach($registered_events as $event)
+                                                                    {
+                                                                        if($event == $event_id)
+                                                                        {
+                                                                            $checked = 1;
+                                                                            break;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            $checked = 0;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                if(!$checked)
+                                                                {
+                                                                    echo "<input type='checkbox' name='events' value='$event_id, $event_participants'> $event_name<br>";
+                                                                }
+                                                                else
+                                                                {
+                                                                    echo "<input type='checkbox' name='events' value='$event_id, $event_participants' checked> $event_name<br>";
+                                                                }
+
+                                                                if($count % $next_div == 0)
+                                                                {
+                                                                    ?>
+                                                                        </div>
+                                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                    <?php
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            echo $conn->error;
+                                                        }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <div class="row  pad-top">
+                                                <div class="col-md-12 center-text">
+                                                    <button class="btn btn-success">Register</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Pending Orders -->
+                <!-- End Select Events -->
                 <!-- ============================================================== -->
 
 
@@ -265,9 +381,12 @@
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
     <!-- Redirect JS -->
-    <script src="../../../js/jquery.redirect.js"></script>
+    <script src="js/jquery.redirect.js"></script>
+    <!-- Sweet Alert -->
+    <script src="js/sweetalert.min.js"></script>
 
     <script type="text/javascript">
+        // ---------------- logout function ------------//
         function logout() {
             $.ajax({
                     method: "POST",
@@ -278,7 +397,41 @@
                     window.location = 'login/';
                 });
         }
+        // -------------- logout function end ----------//
 
+        // ------------- form submit function ---------//
+            $("#add_school_events").submit(function(e) {
+                e.preventDefault();
+                var school_events = new Array();
+
+                $("input:checkbox[name=events]:checked").each(function(){
+                    school_events.push($(this).val());
+                });
+                console.log(school_events);
+                var url = "submit/submit_add_school_events.php";
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        s_id : <?php echo $s_id ?>,
+                        events : school_events
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        data = JSON.parse(data);
+                        swal({
+                            title: data.response.message,
+                            text: '',
+                            type: data.response.status
+                        }, function(){
+                            if(data.response.status == 'success')
+                                $.redirect('view_registered_school.php');
+                        });
+
+                    }
+                });
+            });
+            // ----------- form submit function end --------//
     </script>
 </body>
 

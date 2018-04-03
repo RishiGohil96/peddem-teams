@@ -2,7 +2,7 @@
   $server="localhost";
   $user="root";
   $password="";
-  $db="cravings";
+  $db="peddem_teams";
 
   try
   {

@@ -1,4 +1,9 @@
-.upcoming_birthdays {
-    max-height:250px;
-    overflow-y: auto;
+.center-text {
+    text-align: center;
+}
+.pad-top{
+    padding-top: 50px;
+}
+.pointer{
+    cursor: pointer;
 }
