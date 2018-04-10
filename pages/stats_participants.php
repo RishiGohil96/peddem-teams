@@ -18,7 +18,6 @@
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
-    <link rel="stylesheet" href="css/sweetalert.css">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -106,7 +105,7 @@
                                    <i class="fa fa-address-book-o"></i>
                                     <span class="hide-menu">School Register</span>
                                 </a>
-                            <div id="collapse_list" class="collapse show">
+                            <div id="collapse_list" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="add_school.php" aria-expanded="false">
@@ -130,35 +129,29 @@
                             </div>
                         </li>
                         <li>
-                                <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
+                            <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                         </li>
                         <li>
-                            <a href="#collapse_list_customers" class="collapse-toggle" data-toggle="collapse">
-                                   <i class="fa fa-address-book-o"></i>
-                                    <span class="hide-menu"> Customers </span>
+                            <a href="#collapse_list_stats" class="collapse-toggle" data-toggle="collapse">
+                                   <i class="fa fa-line-chart"></i>
+                                    <span class="hide-menu"> Statistics</span>
                                 </a>
-                            <div id="collapse_list_customers" class="collapse">
+                            <div id="collapse_list_stats" class="collapse show">
                                 <ul class="list-group">
                                     <li>
-                                        <a class="waves-effect waves-dark" href="customers_add.php" aria-expanded="false">
-                                            <i class="fa fa-user-plus"></i>
-                                            <span class="hide-menu"> Add Customers</span>
+                                        <a class="waves-effect waves-dark" href="stats_schools.php" aria-expanded="false">
+                                            <i class="fa fa-university"></i>
+                                            <span class="hide-menu"> Schools</span>
                                             </a>
                                     </li>
                                     <li>
-                                        <a class="waves-effect waves-dark" href="customers_view.php" aria-expanded="true">
+                                        <a class="waves-effect waves-dark" href="stats_participants.php" aria-expanded="true">
                                             <i class="fa fa-users"></i>
-                                            <span class="hide-menu"> View Customers</span>
+                                            <span class="hide-menu"> Participants</span>
                                             </a>
                                     </li>
                                 </ul>
                             </div>
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark" href="stats.php" aria-expanded="true">
-                                    <i class="fa fa-line-chart"></i>
-                                    <span class="hide-menu"> Stats</span>
-                                </a>
                         </li>
                         <li>
                             <a class="waves-effect waves-dark" href="#" aria-expanded="true" onclick=logout()>
@@ -187,8 +180,8 @@
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-12 align-self-center">
-                        <h3 class="text-themecolor">School Register / Add School Participated</h3>
+                    <div class="col-md-12 col-lg-12 align-self-center">
+                        <h3 class="text-themecolor">Statistics / Participants</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -197,109 +190,49 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- School participated -->
+                <!-- Pending Orders -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                               <form class="form-material" id="add_school_participated">
-                                   <div class="col-md-12 col-lg-12 col-sm-12">
-                                   <div class="row">
-                                   <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <?php
-                                    include('config/db_config.php');
-                                    $query = "select * from school_participated";
-                                    $result = $conn->query($query);
-                                    if(mysqli_num_rows($result))
-                                    {
-                                        $participated = array();
-                                        while($row = mysqli_fetch_assoc($result))
-                                        {
-                                            array_push($participated,$row['s_id']);
-                                        }
-                                    }
-
-                                    $query="select * from school_registered_common";
-                                    if($result = $conn->query($query))
-                                    {
-                                        if(mysqli_num_rows($result) == 0)
-                                        {
-                                            ?>
-                                            <h2>No schools registered!</h2>
-                                            <?php
-                                        }
-                                        else
-                                        {
-                                            $total = mysqli_num_rows($result);
-                                            $half = ceil($total/2);
-                                            $school_count = 0;
-                                            while($row = mysqli_fetch_assoc($result))
-                                            {
-                                                $count = 0;
-                                                if(isset($participated))
+                                <?php
+                                include('config/db_config.php');
+                                $query = "SELECT category, age, sum(participants) as participants from school_registered GROUP BY category, age";
+                                if($result = $conn->query($query))
+                                {
+                                    ?>
+                                    <div class="table-responsive">
+                                        <table class="table table-stripped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Age</th>
+                                                    <th>Category</th>
+                                                    <th>Participants</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                while($row = mysqli_fetch_assoc($result))
                                                 {
-                                                    foreach($participated as $part)
-                                                    {
-                                                        if($part == $row['id'])
-                                                        {
-                                                            $count = 1;
-                                                            break;
-                                                        }
-                                                    }
+                                                    echo "<tr>";
+                                                    echo "<td>".$row['age']."</td>";
+                                                    echo "<td>".$row['category']."</td>";
+                                                    echo "<td>".$row['participants']."</td>";
+                                                    echo "</tr>";
                                                 }
                                                 ?>
-                                                <div class="formgroup">
-                                                <?php
-                                                if($count)
-                                                {
-                                                    ?>
-                                                        <input type="checkbox" value="<?php echo $row['id']?>" name="participated" checked>
-
-                                                    <?php
-                                                }
-                                                else
-                                                {
-                                                    ?>
-                                                        <input type="checkbox" value="<?php echo $row['id']?>" name="participated">
-                                                    <?php
-                                                }
-                                                echo $row['school']; ?>
-                                                </div>
-                                                <?php
-                                                $school_count++;
-                                                if($school_count == $half)
-                                                {
-                                                    ?>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <?php
-                                                }
-                                            }
-                                        }
-                                    }
-                                    ?>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-md-12 col-lg-12 col-sm-12 center-text pad-top">
-                                        <?php
-                                        if (isset($total))
-                                        {
-                                            ?>
-                                            <button class="btn btn-success">Submit</button>
-                                            <?php
-                                        }
-                                        ?>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </form>
+                                    <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End school participated -->
+                <!-- End Pending Orders -->
                 <!-- ============================================================== -->
 
 
@@ -343,9 +276,7 @@
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
     <!-- Redirect JS -->
-    <script src="js/jquery.redirect.js"></script>
-    <!-- Sweet alert -->
-    <script src="js/sweetalert.min.js"></script>
+    <script src="../../../js/jquery.redirect.js"></script>
 
     <script type="text/javascript">
         function logout() {
@@ -358,43 +289,6 @@
                     window.location = 'login/';
                 });
         }
-        // ------------- form submit function ---------//
-            $("#add_school_participated").submit(function(e) {
-                e.preventDefault();
-                var school_participated = new Array();
-
-                $("input:checkbox[name=participated]:checked").each(function(){
-                    school_participated.push($(this).val());
-                });
-                console.log(school_participated);
-                if(! school_participated.length)
-                {
-                    swal("No School Selected","Please select a school","info");
-                    return;
-                }
-                var url = "submit/submit_add_school_participated.php";
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: {
-                        schools : school_participated
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        data = JSON.parse(data);
-                        swal({
-                            title: data.title,
-                            text: data.message,
-                            type: data.status
-                        }, function(){
-                            if(data.status == 'success')
-                                $.redirect('view_participated_school.php');
-                        });
-
-                    }
-                });
-            });
-            // ----------- form submit function end --------//
 
     </script>
 </body>

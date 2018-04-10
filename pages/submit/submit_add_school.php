@@ -60,5 +60,59 @@ if($duplicate == 0)
 
 // ------------------ register school end --------------------//
 
+
+// ------------------ register common school -----------------//
+
+if($duplicate == 0)
+{
+    $query = "select count(*) from school_registered_common where school = ?";
+    if($stmt = $conn->prepare($query))
+    {
+        $stmt->bind_param("s",$school);
+        if($stmt->execute())
+        {
+            $stmt->bind_result($count);
+            $stmt->fetch();
+            $json['response']['count'] = $count;
+
+        }
+        else
+        {
+            $json['response']['status'] = "error";
+            $json['response']['message'] = "Common school registration error code 1: ".$conn->error;
+        }
+    }
+    else
+    {
+        $json['response']['status'] = "error";
+        $json['response']['message'] = "Common school registration error code 2: ".$conn->error;
+    }
+    $stmt->close();
+    if(! $count)
+    {
+        $query = "insert into school_registered_common (school) values(?)";
+        if($stmt = $conn->prepare($query))
+        {
+            $stmt->bind_param("s",$school);
+            if($stmt->execute())
+            {
+                //done
+            }
+            else
+            {
+                $json['response']['status'] = "error";
+                $json['response']['message'] = "Common school registration error code 3: ".$conn->error;
+            }
+        }
+        else
+        {
+            $json['response']['status'] = "error";
+            $json['response']['message'] = "Common school registration error code 4: ".$conn->error;
+        }
+    }
+}
+// ---------------- register common school end ---------------//
+
+
 echo json_encode($json);
 ?>

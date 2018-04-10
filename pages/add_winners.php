@@ -11,14 +11,15 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" href="../../../images/favicon/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="../../../images/favicon/favicon-16x16.png" sizes="16x16" />
-    <script src="js/angular.min.js"></script>
-    <title>Registered Schools</title>
+
+    <title>Home</title>
     <!-- Bootstrap Core CSS -->
     <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/sweetalert.css">
+    <script src="js/angular.min.js"></script>
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -42,7 +43,7 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" ng-app="sortApp" ng-controller="mainController">
+    <div id="main-wrapper" ng-app="winnerApp" ng-controller="mainController">
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
@@ -106,7 +107,7 @@
                                    <i class="fa fa-address-book-o"></i>
                                     <span class="hide-menu">School Register</span>
                                 </a>
-                            <div id="collapse_list" class="collapse show">
+                            <div id="collapse_list" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="add_school.php" aria-expanded="false">
@@ -115,75 +116,10 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="collapse-toggle" href="#school_registered_category" data-toggle="collapse">
+                                        <a class="waves-effect waves-dark" href="view_registered_school.php" aria-expanded="true">
                                             <i class="fa fa-eye"></i>
                                             <span class="hide-menu">View Registered</span>
                                         </a>
-                                        <div id="school_registered_category" class="collapse show">
-                                            <ul class="list-group">
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = '' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">All</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'boys'; age_filter = '' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Boys</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'girls'; age_filter = '' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Girls</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = 'u14' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Under 14</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = 'u15' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Under 15</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = 'u17' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Under 17</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'boys'; age_filter = 'u14' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Boys - Under 14</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'girls'; age_filter = 'u14' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Girls - Under 14</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'boys'; age_filter = 'u17' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Boys - Under 17</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'girls'; age_filter = 'u17' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Girls - Under 17</span>
-                                                    </a>
-                                                </li>
-
-                                            </ul>
-                                        </div>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="add_school_participated.php" aria-expanded="false">
@@ -195,7 +131,44 @@
                             </div>
                         </li>
                         <li>
-                                <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
+                            <a href="#collapse_list_winners" class="collapse-toggle" data-toggle="collapse">
+                                   <i class="fa fa-trophy"></i>
+                                    <span class="hide-menu"> Add Winners</span>
+                                </a>
+                            <div id="collapse_list_winners" class="collapse show">
+                                <ul class="list-group">
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="false" ng-click="category_filter = 'boys'; age_filter = 'u14'">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Boys Under-14</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="true" ng-click="category_filter = 'girls'; age_filter = 'u14'">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Girls Under-14</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="false" ng-click="category_filter = 'boys'; age_filter = 'u15'">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Boys Under-15</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="false" ng-click="category_filter = 'boys'; age_filter = 'u17'">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Boys Under-17</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="true" ng-click="category_filter = 'girls'; age_filter = 'u17'">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Girls Under-17</span>
+                                            </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li>
                             <a href="#collapse_list_customers" class="collapse-toggle" data-toggle="collapse">
@@ -253,7 +226,7 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">School Register / Registered Schools</h3>
+                        <h3 class="text-themecolor">Add Winners / {{category_filter}} - {{age_filter}}</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -262,43 +235,73 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Registered Schools -->
+                <!-- Pending Orders -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>School</th>
-                                                <th>Category</th>
-                                                <th>Age</th>
-                                                <th>Participants</th>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="school in schools | filter : {'category' : category_filter, 'age' : age_filter} as filtered" >
-                                                <td class="waves-effect waves-dark" style="width:100%" ng-click="school_details(school.s_id, school.school, school.category, school.age)" class="pointer">{{ school.school }}</td>
-                                                <td>{{ school.category }}</td>
-                                                <td>{{ school.age }}</td>
-                                                <td>{{ school.participants }}</td>
-                                                <td class="center-text"><a ng-click=edit_func(school.s_id)><i class="fa fa-pencil pointer"></i></a></td>
-                                                <td class="center-text"><a ng-click=delete_func(school.s_id)><i class="fa fa-trash pointer"></i></a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <h2>Total Schools: {{filtered.length}}</h2>
-                                <h2>Total Participants: {{ totalParticipants(filtered) }}</h2>
+                                <form ng-submit="my_Func()" class="form-material" >
+                                    <div class="form-group">
+                                        <div class="row form-group">
+                                            <div class="col-lg-2 col-md-2">
+                                                <label>Select Event :</label>
+                                            </div>
+                                            <div class="col-lg-10 col-md-10">
+                                                <select name="event" id="event" class="form-control" ng-model="event_select">
+                                                    <option ng-value="school.event_id"  ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter} | unique : 'event' ">{{school.event}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-lg-2 col-md-2">
+                                                First :
+                                            </div>
+                                            <div class="col-lg-5 col-md-5">
+                                                <select name="first" id="first" ng-model="first" class="form-control">
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' ">{{school.school}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-5 col-md-5">
+                                                <input type="text" class="form-control" ng-model="first_details" placeholder="enter first details">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-lg-2 col-md-2">
+                                                Second :
+                                            </div>
+                                            <div class="col-lg-5 col-md-5">
+                                                <select name="second" id="second" ng-model="second" class="form-control">
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' ">{{school.school}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-5 col-md-5">
+                                                <input type="text" class="form-control" ng-model="second_details" placeholder="enter second details">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-lg-2 col-md-2">
+                                                Third :
+                                            </div>
+                                            <div class="col-lg-5 col-md-5">
+                                                <select name="third" id="third" ng-model="third" class="form-control">
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' ">{{school.school}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-5 col-md-5">
+                                                <input type="text" class="form-control" ng-model="third_details" placeholder="enter third details">
+                                            </div>
+                                        </div>
+                                        <div class="form-group center-text">
+                                            <button type="submit" class="btn btn-success waves-effect waves-dark">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Registered Schools  -->
+                <!-- End Pending Orders -->
                 <!-- ============================================================== -->
 
 
@@ -345,9 +348,10 @@
     <script src="js/jquery.redirect.js"></script>
     <!-- Sweet Alert -->
     <script src="js/sweetalert.min.js"></script>
+    <!-- angular ui -->
+    <script src="js/angular-ui.js"></script>
 
     <script type="text/javascript">
-        // ---------------- logout function --------------//
         function logout() {
             $.ajax({
                     method: "POST",
@@ -358,88 +362,59 @@
                     window.location = 'login/';
                 });
         }
-        // -------------- logout function end ------------//
-
-        // ---------------- edit function --------------//
-
-        function edit_func(s_id) {
-            console.log("here");
-        }
-
-        // -------------- edit function end ------------//
     </script>
 
-    <script>
-        var app = angular.module('sortApp', []);
+    <script type="text/javascript">
+        var app = angular.module('winnerApp', ['ui', 'ui.filters']);
         app.controller('mainController', function($scope, $http) {
-            $http.get('json/view_registered_school_json.php')
+            $http.get('json/add_winners_json.php')
                 .then(function(res) {
                     $scope.schools = res.data;
-                    $scope.category_filter = '';
-                    $scope.age_filter = '';
+                    $scope.category_filter = 'boys';
+                    $scope.age_filter = 'u14';
+                    $scope.first_details ="";
+                    $scope.second_details ="";
+                    $scope.third_details ="";
                 }); //get end
-            $scope.edit_func = function(s_id) {
-                $.redirect("add_school_events.php", {
-                    s_id: s_id,
-                    edit: 1
-                });
-            };
 
-            $scope.delete_func = function(s_id) {
-                console.log(s_id);
-                swal({
-                    title: "Are you sure?",
-                    text: "Delete the school and all its participanting events!",
-                    showCancelButton: true,
-                    cancelButtonText: 'No, cancel it!',
-                    confirmButtonText: 'Yes, I am sure!',
-                    type: "warning"
-                }, function(isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                                type: "POST",
-                                url: "submit/delete_school.php",
-                                data: {
-                                    s_id: s_id
-                                }
-                            })
-                            .done(function(data) {
-                                console.log(data);
-                                data = JSON.parse(data);
-                                 swal({
-                                    title: data.title,
-                                    text: data.message,
-                                    type: data.status
-                                }, function() {
-                                     if(data.status == 'success')
-                                         {
-                                             location.reload();
-                                         }
-                                }); // inner swal end
-                            });
-                    }
-                }); //outer swal end
-            }; // delete_func() end
+            $scope.my_Func = function () {
+                console.log("event: "+$scope.event_select);
+                console.log("first: "+$scope.first+" Details: "+$scope.first_details);
+                console.log("second: "+$scope.second+" Details: "+$scope.second_details);
+                console.log("third: "+$scope.third+" Details: "+$scope.third_details);
 
-            $scope.school_details = function(s_id, school, category, age) {
-                console.log(s_id);
-                console.log(school);
-                $.redirect("view_school_events.php", {
-                    s_id: s_id,
-                    school : school,
-                    category : category,
-                    age : age
-                });
-            };
-
-            $scope.totalParticipants = function() {
-                var total = 0;
-                for(var i = 0; i < $scope.filtered.length; i++)
+                if(isNaN($scope.event_select) || isNaN($scope.first) || isNaN($scope.second) || isNaN($scope.third))
                 {
-                    total += parseInt($scope.filtered[i].participants);
+                    swal("Please fill in all the details","","warning");
+                    return 0;
                 }
-                return total;
-            };
+                if($scope.first == $scope.second || $scope.second == $scope.third || $scope.first == $scope.third)
+                {
+                    swal("Same school can't have multiple positions","","warning");
+                    return;
+                }
+                $.ajax({
+                    type : "POST",
+                    url : "submit/submit_add_winners.php",
+                    data : {
+                        event_id : $scope.event_select,
+                        first : $scope.first,
+                        second : $scope.second,
+                        third : $scope.third,
+                        first_details : $scope.first_details,
+                        second_details : $scope.second_details,
+                        third_details : $scope.third_details,
+                        category : $scope.category_filter,
+                        age : $scope.age_filter
+                    }
+                })
+                .done(function(data){
+                    console.log(data);
+                    data = JSON.parse(data);
+                    swal(data.title, data.message, data.status);
+                });
+
+            }
         }); // controller end
     </script>
 </body>

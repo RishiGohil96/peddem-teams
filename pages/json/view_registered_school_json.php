@@ -2,7 +2,7 @@
 include('../config/db_config.php');
 $json=array();
 
-$query = "select * from school_registered";
+$query = "select * from school_registered order by s_name";
 if($result = $conn->query($query))
 {
     $count = 0;

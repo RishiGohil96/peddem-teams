@@ -11,14 +11,13 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" href="../../../images/favicon/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="../../../images/favicon/favicon-16x16.png" sizes="16x16" />
-    <script src="js/angular.min.js"></script>
-    <title>Registered Schools</title>
+
+    <title>Home</title>
     <!-- Bootstrap Core CSS -->
     <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
-    <link rel="stylesheet" href="css/sweetalert.css">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -42,7 +41,7 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" ng-app="sortApp" ng-controller="mainController">
+    <div id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
@@ -106,7 +105,7 @@
                                    <i class="fa fa-address-book-o"></i>
                                     <span class="hide-menu">School Register</span>
                                 </a>
-                            <div id="collapse_list" class="collapse show">
+                            <div id="collapse_list" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="add_school.php" aria-expanded="false">
@@ -115,75 +114,10 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="collapse-toggle" href="#school_registered_category" data-toggle="collapse">
+                                        <a class="waves-effect waves-dark" href="view_registered_school.php" aria-expanded="true">
                                             <i class="fa fa-eye"></i>
                                             <span class="hide-menu">View Registered</span>
                                         </a>
-                                        <div id="school_registered_category" class="collapse show">
-                                            <ul class="list-group">
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = '' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">All</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'boys'; age_filter = '' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Boys</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'girls'; age_filter = '' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Girls</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = 'u14' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Under 14</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = 'u15' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Under 15</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = 'u17' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Under 17</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'boys'; age_filter = 'u14' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Boys - Under 14</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'girls'; age_filter = 'u14' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Girls - Under 14</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'boys'; age_filter = 'u17' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Boys - Under 17</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'girls'; age_filter = 'u17' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Girls - Under 17</span>
-                                                    </a>
-                                                </li>
-
-                                            </ul>
-                                        </div>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="add_school_participated.php" aria-expanded="false">
@@ -195,35 +129,29 @@
                             </div>
                         </li>
                         <li>
-                                <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
+                            <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                         </li>
                         <li>
-                            <a href="#collapse_list_customers" class="collapse-toggle" data-toggle="collapse">
-                                   <i class="fa fa-address-book-o"></i>
-                                    <span class="hide-menu"> Customers </span>
+                            <a href="#collapse_list_stats" class="collapse-toggle" data-toggle="collapse">
+                                   <i class="fa fa-line-chart"></i>
+                                    <span class="hide-menu"> Statistics</span>
                                 </a>
-                            <div id="collapse_list_customers" class="collapse">
+                            <div id="collapse_list_stats" class="collapse show">
                                 <ul class="list-group">
                                     <li>
-                                        <a class="waves-effect waves-dark" href="customers_add.php" aria-expanded="false">
-                                            <i class="fa fa-user-plus"></i>
-                                            <span class="hide-menu"> Add Customers</span>
+                                        <a class="waves-effect waves-dark" href="stats_schools.php" aria-expanded="false">
+                                            <i class="fa fa-university"></i>
+                                            <span class="hide-menu"> Schools</span>
                                             </a>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="customers_view.php" aria-expanded="true">
                                             <i class="fa fa-users"></i>
-                                            <span class="hide-menu"> View Customers</span>
+                                            <span class="hide-menu"> Participants</span>
                                             </a>
                                     </li>
                                 </ul>
                             </div>
-                        </li>
-                        <li>
-                            <a class="waves-effect waves-dark" href="stats.php" aria-expanded="true">
-                                    <i class="fa fa-line-chart"></i>
-                                    <span class="hide-menu"> Stats</span>
-                                </a>
                         </li>
                         <li>
                             <a class="waves-effect waves-dark" href="#" aria-expanded="true" onclick=logout()>
@@ -252,8 +180,8 @@
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">School Register / Registered Schools</h3>
+                    <div class="col-md-12 col-lg-12 align-self-center">
+                        <h3 class="text-themecolor">Statistics / Schools</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -262,43 +190,87 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Registered Schools -->
+                <!-- Pending Orders -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
+                                <?php
+                                include('config/db_config.php');
+                                $total_schools = 0;
+                                $total_registered_schools = 0;
+                                $total_participated_schools = 0;
+
+                                //--------- total schools ----------------//
+                                $query = "select count(*) as total from school_list";
+                                if($result = $conn->query($query))
+                                {
+                                    while($row = mysqli_fetch_assoc($result))
+                                    {
+                                        $total_schools = $row['total'];
+                                    }
+                                }
+                                else
+                                {
+                                    echo $conn->error;
+                                }
+                                //--------- total schools end ------------//
+
+                                 //--------- total schools registered ----------------//
+                                $query = "select count(*) as total from school_registered_common";
+                                if($result = $conn->query($query))
+                                {
+                                    while($row = mysqli_fetch_assoc($result))
+                                    {
+                                        $total_registered_schools = $row['total'];
+                                    }
+                                }
+                                else
+                                {
+                                    echo $conn->error;
+                                }
+                                //--------- total schools registered end ------------//
+
+                                //--------- total schools participated ----------------//
+                                $query = "select count(*) as total from school_participated";
+                                if($result = $conn->query($query))
+                                {
+                                    while($row = mysqli_fetch_assoc($result))
+                                    {
+                                        $total_participated_schools = $row['total'];
+                                    }
+                                }
+                                else
+                                {
+                                    echo $conn->error;
+                                }
+                                //--------- total schools participated end ------------//
+
+                                ?>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-striped">
+                                    <table class="table table-stripped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>School</th>
-                                                <th>Category</th>
-                                                <th>Age</th>
-                                                <th>Participants</th>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
+                                                <th>Total Schools</th>
+                                                <th>Schools Registered</th>
+                                                <th>Schools Participated</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="school in schools | filter : {'category' : category_filter, 'age' : age_filter} as filtered" >
-                                                <td class="waves-effect waves-dark" style="width:100%" ng-click="school_details(school.s_id, school.school, school.category, school.age)" class="pointer">{{ school.school }}</td>
-                                                <td>{{ school.category }}</td>
-                                                <td>{{ school.age }}</td>
-                                                <td>{{ school.participants }}</td>
-                                                <td class="center-text"><a ng-click=edit_func(school.s_id)><i class="fa fa-pencil pointer"></i></a></td>
-                                                <td class="center-text"><a ng-click=delete_func(school.s_id)><i class="fa fa-trash pointer"></i></a></td>
+                                            <tr>
+                                                <td><?php echo $total_schools ?></td>
+                                                <td><?php echo $total_registered_schools ?></td>
+                                                <td><?php echo $total_participated_schools ?></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <h2>Total Schools: {{filtered.length}}</h2>
-                                <h2>Total Participants: {{ totalParticipants(filtered) }}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Registered Schools  -->
+                <!-- End Pending Orders -->
                 <!-- ============================================================== -->
 
 
@@ -342,12 +314,9 @@
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
     <!-- Redirect JS -->
-    <script src="js/jquery.redirect.js"></script>
-    <!-- Sweet Alert -->
-    <script src="js/sweetalert.min.js"></script>
+    <script src="../../../js/jquery.redirect.js"></script>
 
     <script type="text/javascript">
-        // ---------------- logout function --------------//
         function logout() {
             $.ajax({
                     method: "POST",
@@ -358,89 +327,7 @@
                     window.location = 'login/';
                 });
         }
-        // -------------- logout function end ------------//
 
-        // ---------------- edit function --------------//
-
-        function edit_func(s_id) {
-            console.log("here");
-        }
-
-        // -------------- edit function end ------------//
-    </script>
-
-    <script>
-        var app = angular.module('sortApp', []);
-        app.controller('mainController', function($scope, $http) {
-            $http.get('json/view_registered_school_json.php')
-                .then(function(res) {
-                    $scope.schools = res.data;
-                    $scope.category_filter = '';
-                    $scope.age_filter = '';
-                }); //get end
-            $scope.edit_func = function(s_id) {
-                $.redirect("add_school_events.php", {
-                    s_id: s_id,
-                    edit: 1
-                });
-            };
-
-            $scope.delete_func = function(s_id) {
-                console.log(s_id);
-                swal({
-                    title: "Are you sure?",
-                    text: "Delete the school and all its participanting events!",
-                    showCancelButton: true,
-                    cancelButtonText: 'No, cancel it!',
-                    confirmButtonText: 'Yes, I am sure!',
-                    type: "warning"
-                }, function(isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                                type: "POST",
-                                url: "submit/delete_school.php",
-                                data: {
-                                    s_id: s_id
-                                }
-                            })
-                            .done(function(data) {
-                                console.log(data);
-                                data = JSON.parse(data);
-                                 swal({
-                                    title: data.title,
-                                    text: data.message,
-                                    type: data.status
-                                }, function() {
-                                     if(data.status == 'success')
-                                         {
-                                             location.reload();
-                                         }
-                                }); // inner swal end
-                            });
-                    }
-                }); //outer swal end
-            }; // delete_func() end
-
-            $scope.school_details = function(s_id, school, category, age) {
-                console.log(s_id);
-                console.log(school);
-                $.redirect("view_school_events.php", {
-                    s_id: s_id,
-                    school : school,
-                    category : category,
-                    age : age
-                });
-            };
-
-            $scope.totalParticipants = function() {
-                var total = 0;
-                for(var i = 0; i < $scope.filtered.length; i++)
-                {
-                    total += parseInt($scope.filtered[i].participants);
-                }
-                return total;
-            };
-        }); // controller end
     </script>
 </body>
 

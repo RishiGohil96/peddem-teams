@@ -133,27 +133,7 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="#collapse_list_cakes" class="collapse-toggle" data-toggle="collapse">
-                                   <i class="mdi mdi-cake"></i>
-                                    <span class="hide-menu"> Cakes </span>
-                                </a>
-                                <div id="collapse_list_cakes" class="collapse">
-                                    <ul class="list-group">
-                                        <li>
-                                            <a class="waves-effect waves-dark" href="cakes_add.php" aria-expanded="false">
-                                            <i class="fa fa-plus"></i>
-                                            <span class="hide-menu"> Add Cake</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="waves-effect waves-dark" href="cakes_update.php" aria-expanded="true">
-                                            <i class="fa fa-check"></i>
-                                            <span class="hide-menu"> Update Cake</span>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </div>
+                                <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                             </li>
                             <li>
                                 <a href="#collapse_list_customers" class="collapse-toggle" data-toggle="collapse">
@@ -265,6 +245,7 @@
                                             <div class="col-md-12">
                                                 <select class="form-control form-inline" id="age">
                                                     <option value="u14">Under-14</option>
+                                                    <option value="u15">Under-15</option>
                                                     <option value="u17">Under-17</option>
                                                 </select>
                                             </div>
@@ -351,6 +332,11 @@
                 console.log(school);
                 console.log(category);
                 console.log(age);
+                if(category == 'girls' && age == 'u15')
+                {
+                    swal("Oops!","Under-15 age group is only for boys","info");
+                    return;
+                }
                 var url = "submit/submit_add_school.php";
                 $.ajax({
                     type: "POST",

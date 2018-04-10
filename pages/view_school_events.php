@@ -11,8 +11,8 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" href="../../../images/favicon/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="../../../images/favicon/favicon-16x16.png" sizes="16x16" />
-    <script src="js/angular.min.js"></script>
-    <title>Registered Schools</title>
+
+    <title>Home</title>
     <!-- Bootstrap Core CSS -->
     <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -42,7 +42,7 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" ng-app="sortApp" ng-controller="mainController">
+    <div id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
@@ -115,75 +115,10 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="collapse-toggle" href="#school_registered_category" data-toggle="collapse">
+                                        <a class="waves-effect waves-dark" href="view_registered_school.php" aria-expanded="true">
                                             <i class="fa fa-eye"></i>
                                             <span class="hide-menu">View Registered</span>
                                         </a>
-                                        <div id="school_registered_category" class="collapse show">
-                                            <ul class="list-group">
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = '' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">All</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'boys'; age_filter = '' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Boys</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'girls'; age_filter = '' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Girls</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = 'u14' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Under 14</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = 'u15' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Under 15</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = ''; age_filter = 'u17' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Under 17</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'boys'; age_filter = 'u14' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Boys - Under 14</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'girls'; age_filter = 'u14' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Girls - Under 14</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'boys'; age_filter = 'u17' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Boys - Under 17</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="waves-effect waves-dark" ng-click="category_filter = 'girls'; age_filter = 'u17' " aria-expanded="false">
-                                                        <i class="fa fa-chevron-right"></i>
-                                                        <span class="hide-menu">Girls - Under 17</span>
-                                                    </a>
-                                                </li>
-
-                                            </ul>
-                                        </div>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="add_school_participated.php" aria-expanded="false">
@@ -252,8 +187,8 @@
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">School Register / Registered Schools</h3>
+                    <div class="col-md-12 col-lg-12 align-self-center">
+                        <h3 class="text-themecolor">Register School / School Events</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -262,43 +197,81 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Registered Schools -->
+                <!-- school events -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>School</th>
-                                                <th>Category</th>
-                                                <th>Age</th>
-                                                <th>Participants</th>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="school in schools | filter : {'category' : category_filter, 'age' : age_filter} as filtered" >
-                                                <td class="waves-effect waves-dark" style="width:100%" ng-click="school_details(school.s_id, school.school, school.category, school.age)" class="pointer">{{ school.school }}</td>
-                                                <td>{{ school.category }}</td>
-                                                <td>{{ school.age }}</td>
-                                                <td>{{ school.participants }}</td>
-                                                <td class="center-text"><a ng-click=edit_func(school.s_id)><i class="fa fa-pencil pointer"></i></a></td>
-                                                <td class="center-text"><a ng-click=delete_func(school.s_id)><i class="fa fa-trash pointer"></i></a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <?php
+                                include('config/db_config.php');
+                                $s_id = $_POST['s_id'];
+                                $school = $_POST['school'];
+                                $category = $_POST['category'];
+                                $age = $_POST['age'];
+                                ?>
+                                <div class="center-text">
+                                    <h2><?php echo $school ?></h2>
+                                    <?php echo $category." - ".$age ?>
                                 </div>
-                                <h2>Total Schools: {{filtered.length}}</h2>
-                                <h2>Total Participants: {{ totalParticipants(filtered) }}</h2>
+                                <?php
+                                $query = "SELECT school_events.event_id, event_list.events
+                                        FROM `school_events`
+                                        INNER JOIN event_list ON school_events.event_id = event_list.id
+                                        WHERE school_events.s_id = $s_id";
+                                if($result = $conn->query($query))
+                                {
+                                    if(mysqli_num_rows($result))
+                                    {
+                                        ?>
+                                        <div class="row pad-top">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <?php
+                                                $total = mysqli_num_rows($result);
+                                                $count = 0;
+                                                $half = ceil($total/3);
+                                                //echo $half;
+                                                ?>
+                                                <ul>
+                                                   <?php
+                                                    while($row = mysqli_fetch_assoc($result))
+                                                    {
+                                                        echo "<li>".$row['events']."</li>";
+                                                        $count++;
+                                                        if($count % $half == 0)
+                                                        {
+                                                            $half = ceil(($total - $count)/2);
+                                                            $count=0;
+                                                            ?>
+                                                            </ul>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <ul>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <h3>Total : <?php echo mysqli_num_rows($result) ?></h3>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 right-text">
+                                               <i class="fa fa-pencil pointer fa-3x" onclick="edit_func()"></i> &emsp;
+                                               <i class="fa fa-trash-o pointer fa-3x" onclick="delete_func()"></i>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Registered Schools  -->
+                <!-- End school events -->
                 <!-- ============================================================== -->
 
 
@@ -347,7 +320,6 @@
     <script src="js/sweetalert.min.js"></script>
 
     <script type="text/javascript">
-        // ---------------- logout function --------------//
         function logout() {
             $.ajax({
                     method: "POST",
@@ -358,89 +330,48 @@
                     window.location = 'login/';
                 });
         }
-        // -------------- logout function end ------------//
 
-        // ---------------- edit function --------------//
-
-        function edit_func(s_id) {
-            console.log("here");
+        function edit_func()
+        {
+            $.redirect("add_school_events.php", {s_id : <?php echo $s_id ?>, edit : 1});
         }
 
-        // -------------- edit function end ------------//
-    </script>
-
-    <script>
-        var app = angular.module('sortApp', []);
-        app.controller('mainController', function($scope, $http) {
-            $http.get('json/view_registered_school_json.php')
-                .then(function(res) {
-                    $scope.schools = res.data;
-                    $scope.category_filter = '';
-                    $scope.age_filter = '';
-                }); //get end
-            $scope.edit_func = function(s_id) {
-                $.redirect("add_school_events.php", {
-                    s_id: s_id,
-                    edit: 1
-                });
-            };
-
-            $scope.delete_func = function(s_id) {
-                console.log(s_id);
-                swal({
-                    title: "Are you sure?",
-                    text: "Delete the school and all its participanting events!",
-                    showCancelButton: true,
-                    cancelButtonText: 'No, cancel it!',
-                    confirmButtonText: 'Yes, I am sure!',
-                    type: "warning"
-                }, function(isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                                type: "POST",
-                                url: "submit/delete_school.php",
-                                data: {
-                                    s_id: s_id
-                                }
-                            })
-                            .done(function(data) {
-                                console.log(data);
-                                data = JSON.parse(data);
-                                 swal({
-                                    title: data.title,
-                                    text: data.message,
-                                    type: data.status
-                                }, function() {
-                                     if(data.status == 'success')
-                                         {
-                                             location.reload();
-                                         }
-                                }); // inner swal end
-                            });
-                    }
-                }); //outer swal end
-            }; // delete_func() end
-
-            $scope.school_details = function(s_id, school, category, age) {
-                console.log(s_id);
-                console.log(school);
-                $.redirect("view_school_events.php", {
-                    s_id: s_id,
-                    school : school,
-                    category : category,
-                    age : age
-                });
-            };
-
-            $scope.totalParticipants = function() {
-                var total = 0;
-                for(var i = 0; i < $scope.filtered.length; i++)
-                {
-                    total += parseInt($scope.filtered[i].participants);
+        function delete_func()
+        {
+            swal({
+                title: "Are you sure?",
+                text: "Delete the school and all its participanting events!",
+                showCancelButton: true,
+                cancelButtonText: 'No, cancel it!',
+                confirmButtonText: 'Yes, I am sure!',
+                type: "warning"
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                            type: "POST",
+                            url: "submit/delete_school.php",
+                            data: {
+                                s_id: '<?php echo $s_id ?>'
+                            }
+                        })
+                        .done(function(data) {
+                            console.log(data);
+                            data = JSON.parse(data);
+                             swal({
+                                title: data.title,
+                                text: data.message,
+                                type: data.status
+                            }, function() {
+                                 if(data.status == 'success')
+                                     {
+                                         window.location='view_registered_school.php';
+                                     }
+                            }); // inner swal end
+                        });
                 }
-                return total;
-            };
-        }); // controller end
+            }); //outer swal end
+        } // delete_func() end
+
     </script>
 </body>
 
