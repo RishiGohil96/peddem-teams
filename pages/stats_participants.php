@@ -154,6 +154,28 @@
                             </div>
                         </li>
                         <li>
+                            <a href="#collapse_list_results" class="collapse-toggle" data-toggle="collapse">
+                                   <i class="fa fa-bar-chart"></i>
+                                    <span class="hide-menu"> Results</span>
+                                </a>
+                            <div id="collapse_list_results" class="collapse">
+                                <ul class="list-group">
+                                    <li>
+                                        <a class="waves-effect waves-dark" href="results_winners.php" aria-expanded="false">
+                                            <i class="fa fa-trophy"></i>
+                                            <span class="hide-menu"> Winners</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" href="results_outstanding.php" aria-expanded="true">
+                                            <i class="fa fa-users"></i>
+                                            <span class="hide-menu"> Outstanding Persons</span>
+                                            </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
                             <a class="waves-effect waves-dark" href="#" aria-expanded="true" onclick=logout()>
                                     <i class="fa fa-sign-out"></i>
                                     <span class="hide-menu"> Log Out</span>
@@ -213,6 +235,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php
+                                                $total = 0;
                                                 while($row = mysqli_fetch_assoc($result))
                                                 {
                                                     echo "<tr>";
@@ -220,19 +243,37 @@
                                                     echo "<td>".$row['category']."</td>";
                                                     echo "<td>".$row['participants']."</td>";
                                                     echo "</tr>";
+                                                    $total += $row['participants'];
                                                 }
                                                 ?>
+                                                <tr>
+                                                    <td colspan="2"><b>Total</b></td>
+                                                    <td><b><?php echo $total ?></b></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                     <?php
                                 }
                                 ?>
+                                <div class="right-text">
+                                    <a href="print/print_stats_participants.php"><i class="fa fa-file-excel-o fa-3x pointer pointer"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Pending Orders -->
+                <!-- End paticipants list -->
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body center-text">
+                                <h2><a href="print/print_event_summary.php">Event Wise Participants List <i class="fa fa-file-excel-o"></i></a></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- ============================================================== -->
 
 

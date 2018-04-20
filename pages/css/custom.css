@@ -10,3 +10,14 @@
 .right-text{
     text-align: right;
 }
+.v-center{
+    vertical-align: middle !important;
+}
+.edit-table:hover{
+    background :#FDD835;
+    color: white;
+}
+.delete-table:hover{
+    background: #E53935;
+    color: white;
+}

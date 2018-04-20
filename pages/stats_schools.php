@@ -142,12 +142,34 @@
                                         <a class="waves-effect waves-dark" href="stats_schools.php" aria-expanded="false">
                                             <i class="fa fa-university"></i>
                                             <span class="hide-menu"> Schools</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" href="stats_participants.php" aria-expanded="true">
+                                            <i class="fa fa-users"></i>
+                                            <span class="hide-menu"> Participants</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#collapse_list_results" class="collapse-toggle" data-toggle="collapse">
+                                   <i class="fa fa-bar-chart"></i>
+                                    <span class="hide-menu"> Results</span>
+                                </a>
+                            <div id="collapse_list_results" class="collapse">
+                                <ul class="list-group">
+                                    <li>
+                                        <a class="waves-effect waves-dark" href="results_winners.php" aria-expanded="false">
+                                            <i class="fa fa-trophy"></i>
+                                            <span class="hide-menu"> Winners</span>
                                             </a>
                                     </li>
                                     <li>
-                                        <a class="waves-effect waves-dark" href="customers_view.php" aria-expanded="true">
+                                        <a class="waves-effect waves-dark" href="results_outstanding.php" aria-expanded="true">
                                             <i class="fa fa-users"></i>
-                                            <span class="hide-menu"> Participants</span>
+                                            <span class="hide-menu"> Outstanding Persons</span>
                                             </a>
                                     </li>
                                 </ul>

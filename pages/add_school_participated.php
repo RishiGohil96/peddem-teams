@@ -133,32 +133,48 @@
                                 <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                         </li>
                         <li>
-                            <a href="#collapse_list_customers" class="collapse-toggle" data-toggle="collapse">
-                                   <i class="fa fa-address-book-o"></i>
-                                    <span class="hide-menu"> Customers </span>
+                            <a href="#collapse_list_stats" class="collapse-toggle" data-toggle="collapse">
+                                   <i class="fa fa-line-chart"></i>
+                                    <span class="hide-menu"> Statistics</span>
                                 </a>
-                            <div id="collapse_list_customers" class="collapse">
+                            <div id="collapse_list_stats" class="collapse">
                                 <ul class="list-group">
                                     <li>
-                                        <a class="waves-effect waves-dark" href="customers_add.php" aria-expanded="false">
-                                            <i class="fa fa-user-plus"></i>
-                                            <span class="hide-menu"> Add Customers</span>
+                                        <a class="waves-effect waves-dark" href="stats_schools.php" aria-expanded="false">
+                                            <i class="fa fa-university"></i>
+                                            <span class="hide-menu"> Schools</span>
                                             </a>
                                     </li>
                                     <li>
-                                        <a class="waves-effect waves-dark" href="customers_view.php" aria-expanded="true">
+                                        <a class="waves-effect waves-dark" href="stats_participants.php" aria-expanded="true">
                                             <i class="fa fa-users"></i>
-                                            <span class="hide-menu"> View Customers</span>
+                                            <span class="hide-menu"> Participants</span>
                                             </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li>
-                            <a class="waves-effect waves-dark" href="stats.php" aria-expanded="true">
-                                    <i class="fa fa-line-chart"></i>
-                                    <span class="hide-menu"> Stats</span>
+                            <a href="#collapse_list_results" class="collapse-toggle" data-toggle="collapse">
+                                   <i class="fa fa-bar-chart"></i>
+                                    <span class="hide-menu"> Results</span>
                                 </a>
+                            <div id="collapse_list_results" class="collapse">
+                                <ul class="list-group">
+                                    <li>
+                                        <a class="waves-effect waves-dark" href="results_winners.php" aria-expanded="false">
+                                            <i class="fa fa-trophy"></i>
+                                            <span class="hide-menu"> Winners</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" href="results_outstanding.php" aria-expanded="true">
+                                            <i class="fa fa-users"></i>
+                                            <span class="hide-menu"> Outstanding Persons</span>
+                                            </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li>
                             <a class="waves-effect waves-dark" href="#" aria-expanded="true" onclick=logout()>
@@ -254,17 +270,18 @@
                                                 if($count)
                                                 {
                                                     ?>
-                                                        <input type="checkbox" value="<?php echo $row['id']?>" name="participated" checked>
+                                                        <label><input type="checkbox" value="<?php echo $row['id']?>" name="participated" checked>
 
                                                     <?php
                                                 }
                                                 else
                                                 {
                                                     ?>
-                                                        <input type="checkbox" value="<?php echo $row['id']?>" name="participated">
+                                                        <label><input type="checkbox" value="<?php echo $row['id']?>" name="participated">
                                                     <?php
                                                 }
                                                 echo $row['school']; ?>
+                                                            </label></label>
                                                 </div>
                                                 <?php
                                                 $school_count++;

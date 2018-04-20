@@ -7,7 +7,7 @@ from school_registered, school_events, event_list
 WHERE
 school_registered.s_id = school_events.s_id
 and school_events.event_id = event_list.id
-ORDER BY school_events.event_id";
+ORDER BY school_registered.s_name";
 
 if($result = $conn->query($query))
 {

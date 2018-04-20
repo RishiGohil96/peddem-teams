@@ -18,6 +18,7 @@
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/sweetalert.css">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -158,7 +159,7 @@
                                    <i class="fa fa-bar-chart"></i>
                                     <span class="hide-menu"> Results</span>
                                 </a>
-                            <div id="collapse_list_results" class="collapse">
+                            <div id="collapse_list_results" class="collapse show">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="results_winners.php" aria-expanded="false">
@@ -202,8 +203,8 @@
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">Home</h3>
+                    <div class="col-md-12 align-self-center">
+                        <h3 class="text-themecolor">Results / Winners</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -212,18 +213,121 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Pending Orders -->
+                <!-- Winners -->
                 <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                here
+
+                <?php
+                include ('config/db_config.php');
+                $school[0]['category'] = "boys";
+                $school[0]['age'] = "u14";
+
+                $school[1]['category'] = "girls";
+                $school[1]['age'] = "u14";
+
+                $school[2]['category'] = "boys";
+                $school[2]['age'] = "u15";
+
+                $school[3]['category'] = "boys";
+                $school[3]['age'] = "u17";
+
+                $school[4]['category'] = "girls";
+                $school[4]['age'] = "u17";
+
+                $query = "SELECT event_list.events, p_1.s_name, p_2.s_name, p_3.s_name, position.pos_1_details, position.pos_2_details, position.pos_3_details, position.id, position.event_id
+                    FROM position
+                    JOIN event_list ON position.event_id = event_list.id
+                    JOIN school_registered p_1 ON position.pos_1 = p_1.s_id
+                    JOIN school_registered p_2 ON position.pos_2 = p_2.s_id
+                    JOIN school_registered p_3 ON position.pos_3 = p_3.s_id
+                    where p_1.age=?
+                    and p_1.category=?
+                    ORDER BY position.event_id";
+                if($stmt = $conn->prepare($query))
+                {
+                    for($i=0; $i<5; $i++)
+                    {
+                        ?>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body" id="<?php echo $i ?>">
+                                        <h2 class='text-center text-themecolor'><?php echo $school[$i]['category']." - ".$school[$i]['age']?></h2>
+                        <?php
+                        $category = $school[$i]['category'];
+                        $age = $school[$i]['age'];
+                        $stmt->bind_param("ss", $school[$i]['age'], $school[$i]['category']);
+                        if($stmt->execute())
+                        {
+                            $stmt->store_result();
+
+                            if($stmt->num_rows())
+                            {
+                                $stmt->bind_result($event, $p1, $p2, $p3, $d1, $d2, $d3, $id, $event_id);
+                                ?>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Event</th>
+                                                <th>First</th>
+                                                <th>Second</th>
+                                                <th>Third</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            while($stmt->fetch())
+                                            {
+                                                echo "<tr>";
+                                                echo "<td rowspan=2>".$event;
+                                                echo "<td>".$p1;
+                                                echo "<td>".$p2;
+                                                echo "<td>".$p3;
+                                                echo "<td rowspan=2 class='v-center pointer edit-table' onclick=\"edit_func($id, '$category', '$age', $event_id)\"><i class='fa fa-pencil'></i>";
+                                                echo "<td rowspan=2 class='v-center pointer delete-table' onclick='delete_func($id, $i)'><i class='fa fa-trash'></i>";
+                                                echo "<tr>";
+                                                echo "<td>".$d1;
+                                                echo "<td>".$d2;
+                                                echo "<td>".$d3;
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <?php
+                            }
+                            else
+                            {
+                                ?>
+                                <h2>No Winners Found!</h2>
+                                <?php
+                            }
+                        }
+                        else
+                        {
+                            echo "Something went wrong.<br>Error: ".$conn->error;
+                        }
+                        ?>
+                                    <div class="right-text">
+                                        <a href="print/print_results_winners.php?age=<?php echo $age ?>&category=<?php echo $category ?>"><i class="fa fa-file-excel-o fa-3x pointer pointer"></i></a>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- End Pending Orders -->
+                        <?php
+                    }
+
+                }
+                else
+                {
+                    echo "Something went wrong.<br>Error: ".$conn->error;
+                }
+                ?>
+
+                <!--Winners -->
                 <!-- ============================================================== -->
 
 
@@ -267,7 +371,9 @@
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
     <!-- Redirect JS -->
-    <script src="../../../js/jquery.redirect.js"></script>
+    <script src="js/jquery.redirect.js"></script>
+    <!-- SweetAlert -->
+    <script src="js/sweetalert.min.js"></script>
 
     <script type="text/javascript">
         function logout() {
@@ -279,6 +385,63 @@
                     console.log('logged out');
                     window.location = 'login/';
                 });
+        }
+
+        function edit_func(id, category, age, event_id)
+        {
+            console.log(category);
+            console.log(age);
+            swal({
+                title : "Are you sure?",
+                text : "Edit the winners and details",
+                type : "info",
+                showCancelButton : true,
+                confirmButtonText : "Yes, edit it",
+                cancelButtonText : "No, cancel"
+            }, function(isConfirm) {
+                if(isConfirm)
+                {
+                    $.redirect('add_winners.php', {id : id, age: age, category: category, edit : 'winner', event_id : event_id})
+                }
+            });
+        }
+
+        function delete_func(id, location_id)
+        {
+            console.log(location_id);
+            swal({
+                    title: "Are you sure?",
+                    text: "Delete the winners of the event",
+                    showCancelButton: true,
+                    cancelButtonText: 'No, cancel it!',
+                    confirmButtonText: 'Yes, delete it!',
+                    type: "warning"
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                                type: "POST",
+                                url: "submit/delete_winners.php",
+                                data: {
+                                    id: id
+                                }
+                            })
+                            .done(function(data) {
+                                console.log(data);
+                                data = JSON.parse(data);
+                                 swal({
+                                    title: data.title,
+                                    text: data.message,
+                                    type: data.status
+                                }, function() {
+                                     if(data.status == 'success')
+                                         {
+                                             window.location.hash = location_id;
+                                             window.location.reload(true);
+                                         }
+                                }); // inner swal end
+                            });
+                    }
+                }); //outer swal end
         }
 
     </script>
