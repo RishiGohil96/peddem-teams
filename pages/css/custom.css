@@ -21,3 +21,6 @@
     background: #E53935;
     color: white;
 }
+body{
+    background-image: url('../../assets/images/bg.jpg') !important;
+}

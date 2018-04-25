@@ -1,6 +1,7 @@
 <?php
 include('login/verify_login.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,7 +96,7 @@ include('login/verify_login.php');
                                    <i class="fa fa-address-book-o"></i>
                                     <span class="hide-menu">School Register</span>
                                 </a>
-                            <div id="collapse_list" class="collapse show">
+                            <div id="collapse_list" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="add_school.php" aria-expanded="false">
@@ -119,7 +120,7 @@ include('login/verify_login.php');
                             </div>
                         </li>
                         <li>
-                                <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
+                            <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                         </li>
                         <li>
                             <a href="#collapse_list_stats" class="collapse-toggle has-arrow" data-toggle="collapse">
@@ -198,8 +199,8 @@ include('login/verify_login.php');
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-12 align-self-center">
-                        <h3 class="text-themecolor">School Register / Add School Participated</h3>
+                    <div class="col-md-5 align-self-center">
+                        <h3 class="text-themecolor">Delete Records</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -208,110 +209,23 @@ include('login/verify_login.php');
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- School participated -->
+                <!-- Pending Orders -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                               <form class="form-material" id="add_school_participated">
-                                   <div class="col-md-12 col-lg-12 col-sm-12">
-                                   <div class="row">
-                                   <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <?php
-                                    include('config/db_config.php');
-                                    $query = "select * from school_participated";
-                                    $result = $conn->query($query);
-                                    if(mysqli_num_rows($result))
-                                    {
-                                        $participated = array();
-                                        while($row = mysqli_fetch_assoc($result))
-                                        {
-                                            array_push($participated,$row['s_id']);
-                                        }
-                                    }
-
-                                    $query="select * from school_registered_common";
-                                    if($result = $conn->query($query))
-                                    {
-                                        if(mysqli_num_rows($result) == 0)
-                                        {
-                                            ?>
-                                            <h2>No schools registered!</h2>
-                                            <?php
-                                        }
-                                        else
-                                        {
-                                            $total = mysqli_num_rows($result);
-                                            $half = ceil($total/2);
-                                            $school_count = 0;
-                                            while($row = mysqli_fetch_assoc($result))
-                                            {
-                                                $count = 0;
-                                                if(isset($participated))
-                                                {
-                                                    foreach($participated as $part)
-                                                    {
-                                                        if($part == $row['id'])
-                                                        {
-                                                            $count = 1;
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                ?>
-                                                <div class="formgroup">
-                                                <?php
-                                                if($count)
-                                                {
-                                                    ?>
-                                                        <label><input type="checkbox" value="<?php echo $row['id']?>" name="participated" checked>
-
-                                                    <?php
-                                                }
-                                                else
-                                                {
-                                                    ?>
-                                                        <label><input type="checkbox" value="<?php echo $row['id']?>" name="participated">
-                                                    <?php
-                                                }
-                                                echo $row['school']; ?>
-                                                            </label></label>
-                                                </div>
-                                                <?php
-                                                $school_count++;
-                                                if($school_count == $half)
-                                                {
-                                                    ?>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <?php
-                                                }
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                    </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-md-12 col-lg-12 col-sm-12 center-text pad-top">
-                                        <?php
-                                        if (isset($total))
-                                        {
-                                            ?>
-                                            <button class="btn btn-success">Submit</button>
-                                            <?php
-                                        }
-                                        ?>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </form>
+                                <div class="alert alert-danger center-text">
+                                    Click the button below to delete all the records <br> <br>
+                                    <button class="btn btn-danger" onclick="delete_records()">
+                                        Delete Records
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End school participated -->
+                <!-- End Pending Orders -->
                 <!-- ============================================================== -->
 
 
@@ -356,7 +270,7 @@ include('login/verify_login.php');
     <script src="js/custom.min.js"></script>
     <!-- Redirect JS -->
     <script src="js/jquery.redirect.js"></script>
-    <!-- Sweet alert -->
+    <!-- Sweet Alert -->
     <script src="js/sweetalert.min.js"></script>
 
     <script type="text/javascript">
@@ -370,41 +284,36 @@ include('login/verify_login.php');
                     window.location = 'login/';
                 });
         }
-        // ------------- form submit function ---------//
-            $("#add_school_participated").submit(function(e) {
-                e.preventDefault();
-                var school_participated = new Array();
 
-                $("input:checkbox[name=participated]:checked").each(function(){
-                    school_participated.push($(this).val());
-                });
-                console.log(school_participated);
-                if(! school_participated.length)
-                {
-                    swal("No School Selected","Please select a school","info");
-                    return;
-                }
-                var url = "submit/submit_add_school_participated.php";
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: {
-                        schools : school_participated
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        data = JSON.parse(data);
-                        swal({
-                            title: data.title,
-                            text: data.message,
-                            type: data.status
-                        });
+        //-------------------------
 
+        function delete_records()
+        {
+            swal({
+                    title: "Are you sure?",
+                    text: "Delete all the records",
+                    showCancelButton: true,
+                    cancelButtonText: 'No, cancel it!',
+                    confirmButtonText: 'Yes, I am sure!',
+                    type: "warning"
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                                type: "POST",
+                                url: "submit/submit_delete_records.php"
+                            })
+                            .done(function(data) {
+                                console.log(data);
+                                data = JSON.parse(data);
+                                 swal({
+                                    title: data.title,
+                                    text: data.message,
+                                    type: data.status
+                                }); // inner swal end
+                            });
                     }
-                });
-            });
-            // ----------- form submit function end --------//
-
+                }); //outer swal end
+        }
     </script>
 </body>
 

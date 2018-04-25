@@ -1,3 +1,7 @@
+<?php
+include('login/verify_login.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +57,8 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.php">
                         <!-- Logo icon --><b>
-                            <img src="../../../images/logo.png" alt="homepage" class="dark-logo" width="90" />
+                            <img src="../assets/images/logo-1.png" alt="homepage" class="dark-logo" height="50" />
+                            &nbsp; Bardez Taluka - Team Events
                         </b>
                         <!--End Logo icon -->
                     </a>
@@ -68,21 +73,6 @@
                     <ul class="navbar-nav mr-auto">
                         <!-- This is  -->
                         <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
-                    </ul>
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav my-lg-0">
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- Profile -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-dark" href="#"><img src="../assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
-                        </li>
                     </ul>
                 </div>
             </nav>
@@ -101,7 +91,7 @@
                     <ul id="sidebarnav">
                         <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a></li>
                         <li>
-                            <a href="#collapse_list" class="collapse-toggle" data-toggle="collapse">
+                            <a href="#collapse_list" class="collapse-toggle has-arrow" data-toggle="collapse">
                                    <i class="fa fa-address-book-o"></i>
                                     <span class="hide-menu">School Register</span>
                                 </a>
@@ -132,7 +122,7 @@
                             <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                         </li>
                         <li>
-                            <a href="#collapse_list_stats" class="collapse-toggle" data-toggle="collapse">
+                            <a href="#collapse_list_stats" class="collapse-toggle has-arrow" data-toggle="collapse">
                                    <i class="fa fa-line-chart"></i>
                                     <span class="hide-menu"> Statistics</span>
                                 </a>
@@ -154,7 +144,7 @@
                             </div>
                         </li>
                         <li>
-                            <a href="#collapse_list_results" class="collapse-toggle" data-toggle="collapse">
+                            <a href="#collapse_list_results" class="collapse-toggle has-arrow" data-toggle="collapse">
                                    <i class="fa fa-bar-chart"></i>
                                     <span class="hide-menu"> Results</span>
                                 </a>
@@ -176,10 +166,16 @@
                             </div>
                         </li>
                         <li>
+                            <a class="waves-effect waves-dark" href="delete_records.php" aria-expanded="true">
+                                <i class="fa fa-trash-o"></i>
+                                <span class="hide-menu"> Delete Records</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="waves-effect waves-dark" href="#" aria-expanded="true" onclick=logout()>
-                                    <i class="fa fa-sign-out"></i>
-                                    <span class="hide-menu"> Log Out</span>
-                                </a>
+                                <i class="fa fa-sign-out"></i>
+                                <span class="hide-menu"> Log Out</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -202,7 +198,7 @@
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 align-self-center">
+                    <div class="col-md-12 align-self-center">
                         <h3 class="text-themecolor">Home</h3>
                     </div>
                 </div>
@@ -212,18 +208,36 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Pending Orders -->
+                <!-- welcome -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
-                                here
+                            <div class="card-body center-text">
+                                <h3 class="text-blue">Welcome to the Database Management System for the Bardez Taluka Team events</h3>
+                                Which are held at Peddem Sports Complex
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Pending Orders -->
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>After enetering all the details, you'll be able to get the following lists :</h4>
+                                <ul>
+                                    <li>Category Wise Schools Registered ( <i class="fa fa-address-book-o"></i> School Register -> <i class="fa fa-eye"></i> View Registered )</li>
+                                    <li>Category Wise Participants ( <i class="fa fa-line-chart"></i> Statistics -> <i class="fa fa-users"></i> Participants )</li>
+                                    <li>Event Wise Participants ( <i class="fa fa-line-chart"></i> Statistics -> <i class="fa fa-users"></i> Participants )</li>
+                                    <li>Category Wise Winners ( <i class="fa fa-bar-chart"></i> Results -> <i class="fa fa-trophy"></i> Winners )</li>
+                                    <li>Cateory Wise Outstanding Persons ( <i class="fa fa-bar-chart"></i> Results -> <i class="fa fa-users"></i> Outstanding Persons )</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End welcome -->
                 <!-- ============================================================== -->
 
 
@@ -238,7 +252,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2018 Bardez Taluka - Team Events
+                © 2018 Bardez Taluka - Team Events by <a href="https://www.facebook.com/rocking.rishi96">Rishi Gohil</a>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -266,8 +280,7 @@
     <script src="js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
-    <!-- Redirect JS -->
-    <script src="../../../js/jquery.redirect.js"></script>
+
 
     <script type="text/javascript">
         function logout() {

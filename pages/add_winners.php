@@ -1,3 +1,7 @@
+<?php
+include('login/verify_login.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,7 +60,8 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.php">
                         <!-- Logo icon --><b>
-                            <img src="../../../images/logo.png" alt="homepage" class="dark-logo" width="90" />
+                            <img src="../assets/images/logo-1.png" alt="homepage" class="dark-logo" height="50" />
+                            &nbsp; Bardez Taluka - Team Events
                         </b>
                         <!--End Logo icon -->
                     </a>
@@ -71,21 +76,6 @@
                     <ul class="navbar-nav mr-auto">
                         <!-- This is  -->
                         <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
-                    </ul>
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav my-lg-0">
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- Profile -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-dark" href="#"><img src="../assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
-                        </li>
                     </ul>
                 </div>
             </nav>
@@ -103,7 +93,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a></li>
-                        <li>
+                        <li class="has-arrow active">
                             <a href="#collapse_list" class="collapse-toggle" data-toggle="collapse">
                                    <i class="fa fa-address-book-o"></i>
                                     <span class="hide-menu">School Register</span>
@@ -132,7 +122,7 @@
                             </div>
                         </li>
                         <li>
-                            <a href="#collapse_list_winners" class="collapse-toggle" data-toggle="collapse">
+                            <a href="#collapse_list_winners" class="collapse-toggle has-arrow" data-toggle="collapse">
                                    <i class="fa fa-trophy"></i>
                                     <span class="hide-menu"> Add Winners</span>
                                 </a>
@@ -172,7 +162,7 @@
                             </div>
                         </li>
                         <li>
-                            <a href="#collapse_list_stats" class="collapse-toggle" data-toggle="collapse">
+                            <a href="#collapse_list_stats" class="collapse-toggle has-arrow" data-toggle="collapse">
                                    <i class="fa fa-line-chart"></i>
                                     <span class="hide-menu"> Statistics</span>
                                 </a>
@@ -194,7 +184,7 @@
                             </div>
                         </li>
                         <li>
-                            <a href="#collapse_list_results" class="collapse-toggle" data-toggle="collapse">
+                            <a href="#collapse_list_results" class="collapse-toggle has-arrow" data-toggle="collapse">
                                    <i class="fa fa-bar-chart"></i>
                                     <span class="hide-menu"> Results</span>
                                 </a>
@@ -216,10 +206,16 @@
                             </div>
                         </li>
                         <li>
+                            <a class="waves-effect waves-dark" href="delete_records.php" aria-expanded="true">
+                                <i class="fa fa-trash-o"></i>
+                                <span class="hide-menu"> Delete Records</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="waves-effect waves-dark" href="#" aria-expanded="true" onclick=logout()>
-                                    <i class="fa fa-sign-out"></i>
-                                    <span class="hide-menu"> Log Out</span>
-                                </a>
+                                <i class="fa fa-sign-out"></i>
+                                <span class="hide-menu"> Log Out</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -412,7 +408,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2018 Bardez Taluka - Team Events
+                © 2018 Bardez Taluka - Team Events by <a href="https://www.facebook.com/rocking.rishi96">Rishi Gohil</a>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
