@@ -120,6 +120,9 @@ include('login/verify_login.php');
                             </div>
                         </li>
                         <li>
+                            <a class="waves-effect waves-dark" href="event_list.php" aria-expanded="false"><i class="fa fa-list"></i><span class="hide-menu"> Events List</span></a>
+                        </li>
+                        <li>
                                 <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                         </li>
                         <li>
@@ -272,6 +275,7 @@ include('login/verify_login.php');
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4 right-text">
                                                <i class="fa fa-pencil pointer fa-3x" onclick="edit_func()"></i> &emsp;
+                                               <i class="fa fa-file-excel-o fa-3x pointer" onclick="print_func()"></i> &emsp;
                                                <i class="fa fa-trash-o pointer fa-3x" onclick="delete_func()"></i>
                                             </div>
                                         </div>
@@ -346,6 +350,11 @@ include('login/verify_login.php');
         function edit_func()
         {
             $.redirect("add_school_events.php", {s_id : <?php echo $s_id ?>, edit : 1});
+        }
+
+        function print_func()
+        {
+            $.redirect("print/print_view_school_events.php", {s_id : <?php echo $s_id ?>});
         }
 
         function delete_func()

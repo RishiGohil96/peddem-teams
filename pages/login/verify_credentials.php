@@ -41,12 +41,15 @@ else
     $response['message'] = $conn->error;
 }
 
-$expiry_date = "25/05/2019";
-$today = date('d/m/Y');
-if($expiry_date <= $today)
+
+$today = date("Y-m-d");
+$tempArr=explode('-', '2019-11-5');
+array_walk( $tempArr, 'intval' );
+$expiry_date = date('Y-m-d', mktime(0, 0, 0, $tempArr[1], $tempArr[2], $tempArr[0]));
+if(strtotime($expiry_date) <= strtotime($today))
 {
-    $response['status'] = "error";
-    $response['message'] = "The product has expired. Today - $today, expired: $expiry_date";
+    $response['status'] = "expired";
+    $response['message'] = "The product has expired on $expiry_date";
 }
 echo json_encode($response);
 ?>

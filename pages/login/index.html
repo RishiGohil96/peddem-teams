@@ -70,6 +70,10 @@
             {
                 $( "#error" ).html( "<p class='alert alert-danger'>Invalid Credentials</p>" );
             }
+            else if(data.status == "expired")
+            {
+                $( "#error" ).html( "<p class='alert alert-danger'>"+data.message+"</p>" );
+            }
         })
     });
 </script>

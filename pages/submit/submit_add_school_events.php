@@ -12,7 +12,7 @@ $total_participants = 0;
 $query = "delete from school_events where s_id = $s_id";    // ----- remove existing events
 if($conn->query($query))
 {
-    $query = "insert into school_events(s_id, event_id) values(?,?)";   //---- prepare insert statement
+    $query = "insert into school_events(s_id, event_id, participants) values(?,?,?)";   //---- prepare insert statement
     if($stmt = $conn->prepare($query))
     {
         foreach($events as $event_details)
@@ -20,7 +20,7 @@ if($conn->query($query))
             $event = explode(",",$event_details);
             $event_id = $event[0];
             $total_participants += $event[1];
-            $stmt->bind_param("ii", $s_id, $event_id);  //---- insert each event
+            $stmt->bind_param("iii", $s_id, $event_id, $event[1]);  //---- insert each event
             if(! $stmt->execute())
             {
                 $error = 1;

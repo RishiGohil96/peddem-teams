@@ -22,6 +22,7 @@ include('login/verify_login.php');
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
+    <script src="js/angular.min.js"></script>
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -45,7 +46,7 @@ include('login/verify_login.php');
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper">
+    <div id="main-wrapper" ng-app="listApp" ng-controller="mainController">
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
@@ -119,7 +120,44 @@ include('login/verify_login.php');
                             </div>
                         </li>
                         <li>
-                            <a class="waves-effect waves-dark" href="event_list.php" aria-expanded="false"><i class="fa fa-list"></i><span class="hide-menu"> Events List</span></a>
+                            <a href="#collapse_list_events" class="collapse-toggle has-arrow" data-toggle="collapse">
+                                   <i class="fa fa-list"></i>
+                                    <span class="hide-menu"> Events List</span>
+                                </a>
+                            <div id="collapse_list_events" class="collapse show">
+                                <ul class="list-group">
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="false" ng-click="category_filter = 'boys'; age_filter = 'u14'; $index=0">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Boys Under-14</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="true" ng-click="category_filter = 'girls'; age_filter = 'u14'; $index=0">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Girls Under-14</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="false" ng-click="category_filter = 'boys'; age_filter = 'u15'; $index=0">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Boys Under-15</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="false" ng-click="category_filter = 'boys'; age_filter = 'u17'; $index=0">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Boys Under-17</span>
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="waves-effect waves-dark" aria-expanded="true" ng-click="category_filter = 'girls'; age_filter = 'u17'; $index=0">
+                                            <i class="fa fa-chevron-right"></i>
+                                            <span class="hide-menu"> Girls Under-17</span>
+                                            </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li>
                             <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
@@ -129,19 +167,19 @@ include('login/verify_login.php');
                                    <i class="fa fa-line-chart"></i>
                                     <span class="hide-menu"> Statistics</span>
                                 </a>
-                            <div id="collapse_list_stats" class="collapse show">
+                            <div id="collapse_list_stats" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="stats_schools.php" aria-expanded="false">
                                             <i class="fa fa-university"></i>
                                             <span class="hide-menu"> Schools</span>
-                                        </a>
+                                            </a>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="stats_participants.php" aria-expanded="true">
                                             <i class="fa fa-users"></i>
                                             <span class="hide-menu"> Participants</span>
-                                        </a>
+                                            </a>
                                     </li>
                                 </ul>
                             </div>
@@ -201,8 +239,8 @@ include('login/verify_login.php');
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-12 col-lg-12 align-self-center">
-                        <h3 class="text-themecolor">Statistics / Schools</h3>
+                    <div class="col-md-12 align-self-center">
+                        <h3 class="text-themecolor">Events List / {{category_filter}} - {{age_filter}}</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -211,78 +249,24 @@ include('login/verify_login.php');
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Pending Orders -->
+                <!-- welcome -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <?php
-                                include('config/db_config.php');
-                                $total_schools = 0;
-                                $total_registered_schools = 0;
-                                $total_participated_schools = 0;
-
-                                //--------- total schools ----------------//
-                                $query = "select count(*) as total from school_list";
-                                if($result = $conn->query($query))
-                                {
-                                    while($row = mysqli_fetch_assoc($result))
-                                    {
-                                        $total_schools = $row['total'];
-                                    }
-                                }
-                                else
-                                {
-                                    echo $conn->error;
-                                }
-                                //--------- total schools end ------------//
-
-                                 //--------- total schools registered ----------------//
-                                $query = "select count(*) as total from school_registered_common";
-                                if($result = $conn->query($query))
-                                {
-                                    while($row = mysqli_fetch_assoc($result))
-                                    {
-                                        $total_registered_schools = $row['total'];
-                                    }
-                                }
-                                else
-                                {
-                                    echo $conn->error;
-                                }
-                                //--------- total schools registered end ------------//
-
-                                //--------- total schools participated ----------------//
-                                $query = "select count(*) as total from school_participated";
-                                if($result = $conn->query($query))
-                                {
-                                    while($row = mysqli_fetch_assoc($result))
-                                    {
-                                        $total_participated_schools = $row['total'];
-                                    }
-                                }
-                                else
-                                {
-                                    echo $conn->error;
-                                }
-                                //--------- total schools participated end ------------//
-
-                                ?>
-                                <div class="table-responsive">
-                                    <table class="table table-stripped table-bordered">
+                               <div class="table-responsive">
+                                    <table class="table table-stripped table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Total Schools</th>
-                                                <th>Schools Registered</th>
-                                                <th>Schools Participated</th>
+                                                <th>Event</th>
+                                                <th>Schools</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $total_schools ?></td>
-                                                <td><?php echo $total_registered_schools ?></td>
-                                                <td><?php echo $total_participated_schools ?></td>
+                                        <tbody ng-repeat="event_list in school_list | filter : {'category' : category_filter, 'age' : age_filter}">
+                                           <tr ng-repeat="event_l in event_list.events | orderBy : 'event'" >
+                                                <td>{{event_l.event}}
+                                                <td style="white-space: pre">{{event_l.schools}}
                                             </tr>
                                         </tbody>
                                     </table>
@@ -291,7 +275,7 @@ include('login/verify_login.php');
                         </div>
                     </div>
                 </div>
-                <!-- End Pending Orders -->
+                <!-- End welcome -->
                 <!-- ============================================================== -->
 
 
@@ -334,8 +318,9 @@ include('login/verify_login.php');
     <script src="js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
-    <!-- Redirect JS -->
-    <script src="../../../js/jquery.redirect.js"></script>
+    <!-- angular ui -->
+    <script src="js/angular-ui.js"></script>
+
 
     <script type="text/javascript">
         function logout() {
@@ -349,6 +334,19 @@ include('login/verify_login.php');
                 });
         }
 
+    </script>
+
+    <script type="text/javascript">
+        var app = angular.module('listApp', ['ui', 'ui.filters']);
+        app.controller('mainController', function($scope, $http) {
+            $http.get('json/list_events_json.php')
+                .then(function(res) {
+                    console.log(res.data);
+                    $scope.school_list = (res.data);
+                    $scope.category_filter = 'boys';
+                    $scope.age_filter = 'u14';
+                }); //get end
+        }); // controller end
     </script>
 </body>
 

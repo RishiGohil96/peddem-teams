@@ -119,6 +119,9 @@ include('login/verify_login.php');
                             </div>
                         </li>
                         <li>
+                            <a class="waves-effect waves-dark" href="event_list.php" aria-expanded="false"><i class="fa fa-list"></i><span class="hide-menu"> Events List</span></a>
+                        </li>
+                        <li>
                             <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                         </li>
                         <li>
@@ -253,7 +256,7 @@ include('login/verify_login.php');
                                 }
                                 ?>
                                 <div class="right-text">
-                                    <a href="print/print_stats_participants.php"><i class="fa fa-file-excel-o fa-3x pointer pointer"></i></a>
+                                    <a href="print/print_stats_participants.php"><i class="fa fa-file-excel-o fa-3x pointer"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -266,6 +269,16 @@ include('login/verify_login.php');
                         <div class="card">
                             <div class="card-body center-text">
                                 <h2><a href="print/print_event_summary.php">Event Wise Participants List <i class="fa fa-file-excel-o"></i></a></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body center-text">
+                                <h2><a href="print/print_final_statistical_details.php">Final Statistical Details <i class="fa fa-file-excel-o"></i></a></h2>
                             </div>
                         </div>
                     </div>

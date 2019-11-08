@@ -122,6 +122,9 @@ include('login/verify_login.php');
                             </div>
                         </li>
                         <li>
+                            <a class="waves-effect waves-dark" href="event_list.php" aria-expanded="false"><i class="fa fa-list"></i><span class="hide-menu"> Events List</span></a>
+                        </li>
+                        <li>
                             <a href="#collapse_list_winners" class="collapse-toggle has-arrow" data-toggle="collapse">
                                    <i class="fa fa-trophy"></i>
                                     <span class="hide-menu"> Add Winners</span>
@@ -262,7 +265,7 @@ include('login/verify_login.php');
                                             </div>
                                             <div class="col-lg-10 col-md-10">
                                                 <select name="event" id="event" class="form-control" ng-model="event_select">
-                                                    <option ng-value="school.event_id"  ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter} | unique : 'event' | orderBy : 'event_id'" >{{school.event}}</option>
+                                                    <option ng-value="school.event_id"  ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter} | unique : 'event' | orderBy : 'event'" >{{school.event}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -280,7 +283,7 @@ include('login/verify_login.php');
                                             </div>
                                             <div class="col-lg-5 col-md-5">
                                                 <select name="first" id="first" ng-model="first" class="form-control">
-                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' " ng-if="school.s_id != second && school.s_id != third">{{school.school}}</option>
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} : true | unique : 'school' | orderBy : 'school'" ng-if="school.s_id != second && school.s_id != third">{{school.school}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-4 col-md-4">
@@ -296,7 +299,7 @@ include('login/verify_login.php');
                                             </div>
                                             <div class="col-lg-5 col-md-5">
                                                 <select name="second" id="second" ng-model="second" class="form-control">
-                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' " ng-if="school.s_id != first && school.s_id != third">{{school.school}}</option>
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} : true | unique : 'school' " ng-if="school.s_id != first && school.s_id != third">{{school.school}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-4 col-md-4">
@@ -312,7 +315,7 @@ include('login/verify_login.php');
                                             </div>
                                             <div class="col-lg-5 col-md-5">
                                                 <select name="third" id="third" ng-model="third" class="form-control">
-                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' " ng-if="school.s_id != first && school.s_id != second">{{school.school}}</option>
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} : true | unique : 'school' " ng-if="school.s_id != first && school.s_id != second">{{school.school}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-4 col-md-4">
@@ -337,7 +340,7 @@ include('login/verify_login.php');
                                             </div>
                                             <div class="col-md-5 col-lg-5">
                                                 <select ng-model="op_first_school" class="form-control">
-                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' ">{{school.school}}</option>
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} : true | unique : 'school' ">{{school.school}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-5 col-md-5">
@@ -350,7 +353,7 @@ include('login/verify_login.php');
                                             </div>
                                             <div class="col-md-5 col-lg-5">
                                                 <select ng-model="op_second_school" class="form-control">
-                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' ">{{school.school}}</option>
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} : true | unique : 'school' ">{{school.school}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-5 col-md-5">
@@ -363,7 +366,7 @@ include('login/verify_login.php');
                                             </div>
                                             <div class="col-md-5 col-lg-5">
                                                 <select ng-model="op_third_school" class="form-control">
-                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' ">{{school.school}}</option>
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} : true | unique : 'school' ">{{school.school}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-5 col-md-5">
@@ -376,7 +379,7 @@ include('login/verify_login.php');
                                             </div>
                                             <div class="col-md-5 col-lg-5">
                                                 <select ng-model="op_fourth_school" class="form-control">
-                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} | unique : 'school' ">{{school.school}}</option>
+                                                    <option ng-value="school.s_id" ng-repeat="school in schools | filter : {'age' : age_filter, 'category' : category_filter, 'event_id' : event_select} : true | unique : 'school' ">{{school.school}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-5 col-md-5">
@@ -463,6 +466,7 @@ include('login/verify_login.php');
         app.controller('mainController', function($scope, $http) {
             $http.get('json/add_winners_json.php')
                 .then(function(res) {
+                    console.log(res);
                     $scope.schools = res.data;
                     $scope.first_details ="";
                     $scope.second_details ="";

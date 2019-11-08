@@ -1,10 +1,6 @@
-<?php
-include('login/verify_login.php');
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- Add Schools to the database -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,12 +12,13 @@ include('login/verify_login.php');
     <link rel="icon" type="image/png" href="../../../images/favicon/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="../../../images/favicon/favicon-16x16.png" sizes="16x16" />
 
-    <title>Home</title>
+    <title>Add Schools DB</title>
     <!-- Bootstrap Core CSS -->
     <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/sweetalert.css">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -92,9 +89,9 @@ include('login/verify_login.php');
                         <li> <a class="waves-effect waves-dark" href="index.php" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a></li>
                         <li>
                             <a href="#collapse_list" class="collapse-toggle has-arrow" data-toggle="collapse">
-                                   <i class="fa fa-address-book-o"></i>
-                                    <span class="hide-menu">School Register</span>
-                                </a>
+                                <i class="fa fa-address-book-o"></i>
+                                <span class="hide-menu">School Register</span>
+                            </a>
                             <div id="collapse_list" class="collapse">
                                 <ul class="list-group">
                                     <li>
@@ -126,10 +123,10 @@ include('login/verify_login.php');
                         </li>
                         <li>
                             <a href="#collapse_list_stats" class="collapse-toggle has-arrow" data-toggle="collapse">
-                                   <i class="fa fa-line-chart"></i>
-                                    <span class="hide-menu"> Statistics</span>
-                                </a>
-                            <div id="collapse_list_stats" class="collapse show">
+                                <i class="fa fa-line-chart"></i>
+                                <span class="hide-menu"> Statistics</span>
+                            </a>
+                            <div id="collapse_list_stats" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="stats_schools.php" aria-expanded="false">
@@ -148,22 +145,22 @@ include('login/verify_login.php');
                         </li>
                         <li>
                             <a href="#collapse_list_results" class="collapse-toggle has-arrow" data-toggle="collapse">
-                                   <i class="fa fa-bar-chart"></i>
-                                    <span class="hide-menu"> Results</span>
-                                </a>
+                                <i class="fa fa-bar-chart"></i>
+                                <span class="hide-menu"> Results</span>
+                            </a>
                             <div id="collapse_list_results" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="results_winners.php" aria-expanded="false">
                                             <i class="fa fa-trophy"></i>
                                             <span class="hide-menu"> Winners</span>
-                                            </a>
+                                        </a>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="results_outstanding.php" aria-expanded="true">
                                             <i class="fa fa-users"></i>
                                             <span class="hide-menu"> Outstanding Persons</span>
-                                            </a>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -201,8 +198,8 @@ include('login/verify_login.php');
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-12 col-lg-12 align-self-center">
-                        <h3 class="text-themecolor">Statistics / Schools</h3>
+                    <div class="col-md-12 align-self-center">
+                        <h3 class="text-themecolor">Add Schools in Database</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -211,87 +208,48 @@ include('login/verify_login.php');
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Pending Orders -->
+                <!-- welcome -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <?php
-                                include('config/db_config.php');
-                                $total_schools = 0;
-                                $total_registered_schools = 0;
-                                $total_participated_schools = 0;
+                                <h4>The following Schools will be added:</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                //--------- total schools ----------------//
-                                $query = "select count(*) as total from school_list";
-                                if($result = $conn->query($query))
-                                {
-                                    while($row = mysqli_fetch_assoc($result))
-                                    {
-                                        $total_schools = $row['total'];
-                                    }
-                                }
-                                else
-                                {
-                                    echo $conn->error;
-                                }
-                                //--------- total schools end ------------//
-
-                                 //--------- total schools registered ----------------//
-                                $query = "select count(*) as total from school_registered_common";
-                                if($result = $conn->query($query))
-                                {
-                                    while($row = mysqli_fetch_assoc($result))
-                                    {
-                                        $total_registered_schools = $row['total'];
-                                    }
-                                }
-                                else
-                                {
-                                    echo $conn->error;
-                                }
-                                //--------- total schools registered end ------------//
-
-                                //--------- total schools participated ----------------//
-                                $query = "select count(*) as total from school_participated";
-                                if($result = $conn->query($query))
-                                {
-                                    while($row = mysqli_fetch_assoc($result))
-                                    {
-                                        $total_participated_schools = $row['total'];
-                                    }
-                                }
-                                else
-                                {
-                                    echo $conn->error;
-                                }
-                                //--------- total schools participated end ------------//
-
-                                ?>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-stripped table-bordered">
+                                    <table class="table table-stripped table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Total Schools</th>
-                                                <th>Schools Registered</th>
-                                                <th>Schools Participated</th>
+                                                <th>No.</th>
+                                                <th>School</th>
+                                                <th>Place</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><?php echo $total_schools ?></td>
-                                                <td><?php echo $total_registered_schools ?></td>
-                                                <td><?php echo $total_participated_schools ?></td>
+                                                <td>01</td>
+                                                <td>Corner Stone</td>
+                                                <td>Karaswada</td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="col-sm-12 center-text">
+                                    <button class="btn btn-success" id="add_school_btn">Add Schools</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Pending Orders -->
+                <!-- End welcome -->
                 <!-- ============================================================== -->
 
 
@@ -334,21 +292,32 @@ include('login/verify_login.php');
     <script src="js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
-    <!-- Redirect JS -->
-    <script src="../../../js/jquery.redirect.js"></script>
-
+    <!-- Sweet Alert -->
+    <script src="js/sweetalert.min.js"></script>
     <script type="text/javascript">
-        function logout() {
-            $.ajax({
-                    method: "POST",
-                    url: "login/logout.php"
-                })
-                .done(function() {
-                    console.log('logged out');
-                    window.location = 'login/';
-                });
-        }
+         // ------------- add school function ---------//
+            $("#add_school_btn").click(function() {
+                $('#add_school_btn').prop('disabled', true);
+                var url = "submit/submit_add_school_db.php";
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: 1,
+                    success: function(data) {
+                        console.log(data);
+                        data = JSON.parse(data);
+                        swal({
+                            title: data.message,
+                            text: '',
+                            type: data.status
+                        }, function(){
+                            window.location="index.php";
+                        });
 
+                    }
+                });
+            });
+            // ----------- add school function end --------//
     </script>
 </body>
 

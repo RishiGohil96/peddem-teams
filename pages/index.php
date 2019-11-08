@@ -119,6 +119,9 @@ include('login/verify_login.php');
                             </div>
                         </li>
                         <li>
+                            <a class="waves-effect waves-dark" href="event_list.php" aria-expanded="false"><i class="fa fa-list"></i><span class="hide-menu"> Events List</span></a>
+                        </li>
+                        <li>
                             <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                         </li>
                         <li>
@@ -215,7 +218,7 @@ include('login/verify_login.php');
                         <div class="card">
                             <div class="card-body center-text">
                                 <h3 class="text-blue">Welcome to the Database Management System for the Bardez Taluka Team events</h3>
-                                Which are held at Peddem Sports Complex
+                                Which are held at Peddem Sports Complex, for the academic year 2018-19
                             </div>
                         </div>
                     </div>

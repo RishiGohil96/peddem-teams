@@ -27,7 +27,7 @@ $json = array();
 $query = "SELECT DISTINCT school_events.event_id, event_list.events, event_list.participants
         from school_events, event_list
         where school_events.event_id = event_list.id
-        order by school_events.event_id";
+        order by event_list.events";
 
 
 
@@ -53,24 +53,26 @@ if($result=$conn->query($query))
 
             $age = $school[$i]['age'];
             $category = $school[$i]['category'];
-            $query = "SELECT COUNT(school_registered.s_id) as count
-                    from school_registered, school_events
-                    where school_events.s_id = school_registered.s_id
-                    and school_registered.age = '$age'
-                    and school_registered.category = '$category'
-                    and school_events.event_id = $event_id";
+            $query = "SELECT COUNT(school_registered.s_id) as count, SUM(school_events.participants) as sum
+                from school_registered, school_events
+                where school_events.s_id = school_registered.s_id
+                and school_registered.age = '$age'
+                and school_registered.category = '$category'
+                and school_events.event_id = $event_id";
             if($res = $conn->query($query))
             {
                 while($row = mysqli_fetch_assoc($res))
                 {
                     $count = $row['count'];
+                    $sum = $row['sum'];
                 }
                 if($count != 0)
                 {
-                    $total_participants += $count * $participants;
+                    $total_participants += $sum;
                     $json[$json_row]['total_participants'] = $total_participants;
                     $json[$json_row]['category'][$category_count] = $category." - ".$age;
                     $json[$json_row]['category_schools'][$category_count] = $count;
+                    $json[$json_row]['category_participants'][$category_count] = $sum;
                     $json[$json_row]['count'] = ++$category_count;
                 }
             }
@@ -90,7 +92,7 @@ for($i=0; $i<=$json_row; $i++)
     {
         $value .= $json[$i]['category'][$j] ."\t";
         $value .= $json[$i]['category_schools'][$j] ."\t";
-        $value .= ($json[$i]['category_schools'][$j] * $json[$i]['participants']) ."\t";
+        $value .= $json[$i]['category_participants'][$j] ."\t";
         if($j == $json[$i]['count']-1)
         {
             $value .= $json[$i]['total_participants'] ."\t";
@@ -108,3 +110,4 @@ header("Content-Disposition: attachment; filename=$filename");      //chnage fil
 header("Pragma: no-cache");
 header("Expires: 0");
 echo ucwords($columnHeader) . "\n" . $setData . "\n";
+//echo json_encode($json);

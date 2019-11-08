@@ -22,6 +22,7 @@ include('login/verify_login.php');
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/sweetalert.css">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -95,7 +96,7 @@ include('login/verify_login.php');
                                    <i class="fa fa-address-book-o"></i>
                                     <span class="hide-menu">School Register</span>
                                 </a>
-                            <div id="collapse_list" class="collapse">
+                            <div id="collapse_list" class="collapse show">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="add_school.php" aria-expanded="false">
@@ -129,19 +130,19 @@ include('login/verify_login.php');
                                    <i class="fa fa-line-chart"></i>
                                     <span class="hide-menu"> Statistics</span>
                                 </a>
-                            <div id="collapse_list_stats" class="collapse show">
+                            <div id="collapse_list_stats" class="collapse">
                                 <ul class="list-group">
                                     <li>
                                         <a class="waves-effect waves-dark" href="stats_schools.php" aria-expanded="false">
                                             <i class="fa fa-university"></i>
                                             <span class="hide-menu"> Schools</span>
-                                        </a>
+                                            </a>
                                     </li>
                                     <li>
                                         <a class="waves-effect waves-dark" href="stats_participants.php" aria-expanded="true">
                                             <i class="fa fa-users"></i>
                                             <span class="hide-menu"> Participants</span>
-                                        </a>
+                                            </a>
                                     </li>
                                 </ul>
                             </div>
@@ -201,8 +202,8 @@ include('login/verify_login.php');
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-12 col-lg-12 align-self-center">
-                        <h3 class="text-themecolor">Statistics / Schools</h3>
+                    <div class="col-md-12 align-self-center">
+                        <h3 class="text-themecolor">Register School / Individual Event Participants</h3>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -211,87 +212,93 @@ include('login/verify_login.php');
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- Pending Orders -->
+                <!-- welcome -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body center-text">
                                 <?php
-                                include('config/db_config.php');
-                                $total_schools = 0;
-                                $total_registered_schools = 0;
-                                $total_participated_schools = 0;
-
-                                //--------- total schools ----------------//
-                                $query = "select count(*) as total from school_list";
-                                if($result = $conn->query($query))
-                                {
-                                    while($row = mysqli_fetch_assoc($result))
-                                    {
-                                        $total_schools = $row['total'];
-                                    }
-                                }
-                                else
-                                {
-                                    echo $conn->error;
-                                }
-                                //--------- total schools end ------------//
-
-                                 //--------- total schools registered ----------------//
-                                $query = "select count(*) as total from school_registered_common";
-                                if($result = $conn->query($query))
-                                {
-                                    while($row = mysqli_fetch_assoc($result))
-                                    {
-                                        $total_registered_schools = $row['total'];
-                                    }
-                                }
-                                else
-                                {
-                                    echo $conn->error;
-                                }
-                                //--------- total schools registered end ------------//
-
-                                //--------- total schools participated ----------------//
-                                $query = "select count(*) as total from school_participated";
-                                if($result = $conn->query($query))
-                                {
-                                    while($row = mysqli_fetch_assoc($result))
-                                    {
-                                        $total_participated_schools = $row['total'];
-                                    }
-                                }
-                                else
-                                {
-                                    echo $conn->error;
-                                }
-                                //--------- total schools participated end ------------//
-
+                                include ('config/db_config.php');
+                                $s_id = $_POST['s_id'];
+                                $school = $_POST['s_name'];
+                                $age = $_POST['age'];
+                                $category = $_POST['category'];
+                                $event_id = array();
+                                $index = 0;
                                 ?>
-                                <div class="table-responsive">
-                                    <table class="table table-stripped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Total Schools</th>
-                                                <th>Schools Registered</th>
-                                                <th>Schools Participated</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $total_schools ?></td>
-                                                <td><?php echo $total_registered_schools ?></td>
-                                                <td><?php echo $total_participated_schools ?></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <div class="center-text">
+                                        <h2>
+                                            <?php echo $school ?>
+                                        </h2>
+                                        <h4>
+                                            <?php echo $category." - ".$age ?>
+                                        </h4>
+                                    </div>
+                                <?php
+                                $query = "SELECT school_events.id, event_list.events, school_events.participants
+                                            from school_events, event_list
+                                            WHERE event_list.participants = 1
+                                            AND school_events.s_id ='$s_id'
+                                            AND school_events.event_id = event_list.id";
+                                if($result = $conn->query($query))
+                                {
+                                    if($result->num_rows > 0)
+                                    {
+                                        ?>
+                                        <form id="individual_events" class="form-material">
+                                           <div class="row pad-top">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 center-text">
+                                                    <?php
+                                                    while($row = mysqli_fetch_assoc($result))
+                                                    {
+                                                        $id = $row['id'];
+                                                        $participants = $row['participants'];
+                                                        array_push($event_id,$id);
+                                                        ?>
+                                                        <div class="row center-text">
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 right-text">
+                                                                <label><?php echo $row['events'] ?></label><br>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                               <input type="text" placeholder="Enter no. of participants" class="form-control form-control-line" id="<?php echo $index ?>" value ="<?php echo $participants ?>">
+                                                            </div>
+                                                        </div>
+                                                        <?php
+                                                        $index++;
+                                                    }
+                                                    ?>
+                                            </div>
+                                            </div>
+                                            <div class="row  pad-top">
+                                                <div class="col-md-12 center-text">
+                                                    <button class="btn btn-success" id="submit_btn">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <script>
+                                            window.location = 'view_registered_school.php';
+                                        </script>
+                                        <?php
+                                    }
+                                }
+                                else
+                                {
+                                    echo $conn->error;
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Pending Orders -->
+
+
+                <!-- End welcome -->
                 <!-- ============================================================== -->
 
 
@@ -334,8 +341,9 @@ include('login/verify_login.php');
     <script src="js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
-    <!-- Redirect JS -->
-    <script src="../../../js/jquery.redirect.js"></script>
+    <!-- Sweet Alert -->
+    <script src="js/sweetalert.min.js"></script>
+
 
     <script type="text/javascript">
         function logout() {
@@ -348,6 +356,59 @@ include('login/verify_login.php');
                     window.location = 'login/';
                 });
         }
+
+
+        $("#individual_events").submit(function(e) {
+            e.preventDefault();
+            var count = <?php echo sizeof($event_id) ?>;
+            var events = <?php echo json_encode($event_id) ?>;
+            var participants = new Array() ;
+            for(var i=0; i < count ; i++)
+            {
+                participants[i] = parseInt($("#"+i).val());
+                if(isNaN(participants[i]))
+                {
+                    swal({
+                        title : 'Enter the number of participants',
+                        text : '',
+                        type : 'error'
+                    }, function(){
+                        window.setTimeout(function () {
+                            $("#"+i).focus();
+                        }, 1000);
+                    });
+                    return;
+                }
+
+            }
+
+            $.ajax({
+                url : 'submit/submit_add_individual_participants.php',
+                type : 'POST',
+                data : {
+                    event_id : events,
+                    participants : participants,
+                    s_id : '<?php echo $s_id ?>'
+                },
+                success : function(data) {
+                    console.log(data);
+                    data = JSON.parse(data);
+                    console.log(data);
+                    swal({
+                        type : data.type,
+                        title : data.message,
+                        text : ''
+                    }, function(){
+                        if(data.type == 'success')
+                        {
+                            window.location = 'view_registered_school.php';
+                        }
+                    });
+                }
+            }); //ajax end
+
+            console.log(participants);
+        });
 
     </script>
 </body>

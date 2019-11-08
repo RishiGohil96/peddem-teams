@@ -120,6 +120,9 @@ include('login/verify_login.php');
                             </div>
                         </li>
                         <li>
+                            <a class="waves-effect waves-dark" href="event_list.php" aria-expanded="false"><i class="fa fa-list"></i><span class="hide-menu"> Events List</span></a>
+                        </li>
+                        <li>
                                 <a class="waves-effect waves-dark" href="add_winners.php" aria-expanded="false"><i class="fa fa-trophy"></i><span class="hide-menu"> Add Winners</span></a>
                         </li>
                         <li>
@@ -268,7 +271,7 @@ include('login/verify_login.php');
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                                     <?php
-                                                        $query = "select id, events, participants from event_list where category LIKE (?) AND age LIKE (?)";
+                                                        $query = "select id, events, participants from event_list where category LIKE (?) AND age LIKE (?) ORDER BY events";
                                                         if($stmt = $conn->prepare($query))
                                                         {
                                                             $param_category = "%".$category."%";
@@ -401,7 +404,7 @@ include('login/verify_login.php');
             $("#add_school_events").submit(function(e) {
                 e.preventDefault();
                 var school_events = new Array();
-
+                var s_name = "<?php echo $school ?>";
                 $("input:checkbox[name=events]:checked").each(function(){
                     school_events.push($(this).val());
                 });
@@ -424,7 +427,7 @@ include('login/verify_login.php');
                     type: "POST",
                     url: url,
                     data: {
-                        s_id : <?php echo $s_id ?>,
+                        s_id : '<?php echo $s_id ?>',
                         events : school_events
                     },
                     success: function(data) {
@@ -436,7 +439,7 @@ include('login/verify_login.php');
                             type: data.response.status
                         }, function(){
                             if(data.response.status == 'success')
-                                $.redirect('view_registered_school.php');
+                                $.redirect('add_individual_participants.php', {s_id : '<?php echo $s_id ?>', s_name : "<?php echo $school ?>", category : '<?php echo $category ?>', age : '<?php echo $age ?>' });
                         });
 
                     }
